@@ -3,26 +3,36 @@
 	import '../../../app.css';
 </script>
 
-<div
-	data-theme="emerald"
-	class="grid grid-cols-2 h-screen prose max-w-none bg-base-100"
->
-	<div
-		class="flex flex-col justify-center gap-5 drop-shadow-md font-bold text-6xl rounded-tr-[0.5rem]"
-	>
-		<h1 class="text-6xl capitalize text-primary italic m-0 drop-shadow-lg px-12">
-			<br /> Calcula Inteligente,
-			<br />Gasta Sabiamente...
+<div class="grid md:grid-cols-2 h-screen prose max-w-none bg-base-100">
+	<div class="md:flex flex-col justify-between gap-5 drop-shadow-md font-bold text-6xl hidden">
+		<h1 class="text-5xl capitalize italic m-0 drop-shadow-sm px-12">
+			<br /> Calcula
+
+			<strong class="text-primary"> Inteligente, </strong>
+			<br />Gasta
+			<strong class="text-primary"> Sabiamente... </strong>
 		</h1>
 		<img
 			src="/login-banner.svg"
 			alt="SmartFin, Mejora tus finanzas."
-			class="m-0 w-fit h-full drop-shadow-sm"
+			class="m-0 w-full h-fit drop-shadow-sm"
 		/>
 	</div>
-	<div class="flex flex-col gap-5 justify-center bg-primary items-center prose-lg text-center p-12 bg-base">
-		<p class="font-medium m-0 text-base">Inicia sesión.</p>
-
+	<div
+		class="flex flex-col gap-5 bg-base-200 justify-center items-center prose-lg text-center p-12 md:rounded-l-[2.5rem]"
+	>
+		<p class="font-medium m-0 text-4xl">
+			Ingresa a <strong class="text-primary"> SmartFin </strong>
+		</p>
+		<div class="w-full max-w-sm">
+			<Button
+				className="btn-circle w-full bg-transparent border border-secondary text-base-300 hover:bg-accent hover:text-base-200 dark:text-white dark:hover:text-primary"
+			>
+				<img src="/google-color.svg" alt="Google SigIn" />
+				Continuar con Google
+			</Button>
+		</div>
+		<p class="divider">ó</p>
 		<div class="w-full max-w-sm">
 			<span class="label mb-1 p-0 text-sm">Correo electrónico</span>
 			<Input
@@ -38,7 +48,7 @@
 				className="border-none drop-shadow max-w-sm"
 			/>
 		</div>
-		<Button className="drop-shadow w-full max-w-sm">
+		<Button className="drop-shadow w-full max-w-sm btn-primary">
 			<!-- on:click={(e) => signInWithEmailAndPassword(email, password)} -->
 			<!-- <Icon name="login" className="mr-2" /> -->
 			Entrar
