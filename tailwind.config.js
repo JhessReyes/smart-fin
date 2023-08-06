@@ -3,6 +3,9 @@ export default {
   content: ['./src/**/*.{html,js,svelte,ts}'],
   theme: {
     extend: {},
+    fontFamily: {
+      custom: ['Inter', 'Nunito', 'sans-serif']
+    }
   },
   daisyui: {
     themes: [
@@ -36,6 +39,6 @@ export default {
       },
     ],
   },
-  plugins: [require("daisyui")],
+  plugins: [require("daisyui"), require('@tailwindcss/typography')],
 }
 
