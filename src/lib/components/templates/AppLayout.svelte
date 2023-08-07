@@ -145,8 +145,8 @@
 					<!-- <Icon name={'attach_money'} className="text-4xl font-bold" /> -->
 					<h1 class="m-0">{title || 'Inicio'}</h1>
 				</div>
-				<slot name="actions"><!-- optional fallback --></slot>
 			</div>
+			<slot name="actions"><!-- optional fallback --></slot>
 		</header>
 		<main class="py-5 grow overflow-x-hidden">
 			<slot />
