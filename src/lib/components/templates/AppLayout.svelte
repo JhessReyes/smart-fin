@@ -1,7 +1,8 @@
 <script lang="ts">
 	import { slide } from 'svelte/transition';
-	import { Icon } from '../atoms';
+	import { Icon, Tooltip } from '../atoms';
 	import { appState } from '$lib/stores';
+	import { sineIn, sineInOut, sineOut } from 'svelte/easing';
 
 	export let collapsed: boolean = false;
 	export let title: string = 'Inicio';
@@ -46,25 +47,37 @@
 </script>
 
 <div class="prose max-w-none flex h-screen bg-base-200">
-	<nav
-		class="flex flex-col w-auto bg-base-100 rounded-r-3xl transition delay-150 ease-in-out overflow-y-auto"
-	>
+	<nav class="flex flex-col w-auto bg-base-100 rounded-r-3xl relative">
 		<!-- svelte-ignore a11y-no-static-element-interactions -->
 		<!-- svelte-ignore a11y-click-events-have-key-events -->
 		<div
-			class={`h-24 flex rounded-tr-xl cursor-pointer  ${collapsed ? 'p-4' : 'px-8 w-72'}`}
+			class={`h-24 flex rounded-tr-xl cursor-pointer  transition duration-500 ease-in-out delay-300 ${
+				collapsed ? 'p-4' : ' px-8 '
+			}`}
 			on:click={() => (collapsed = !collapsed)}
 		>
-			<h1
-				class={`text-transparent bg-clip-text px-1 bg-gradient-to-r from-secondary to-accent flex items-center justify-between ${
-					collapsed ? 'flex-col text-sm' : 'inline'
-				} w-full m-0 italic text-center items-center font-medium`}
-			>
+			<div class="flex items-center justify-between {collapsed ? 'flex-col' : 'flex-row'}">
 				<Icon
 					name="attach_money"
 					className="text-secondary px-1 text-4xl bg-base-200 rounded-full"
-				/> Smart Fin
-			</h1>
+				/>
+				{#if !collapsed}
+					<h1
+						class={`text-transparent bg-clip-text px-1 bg-gradient-to-r from-secondary to-accent 
+						 w-full m-0 italic text-center`}
+						transition:slide={{ duration: 800, axis: 'x' }}
+					>
+						SmartFin
+					</h1>
+				{:else}
+					<h1
+						class={`text-transparent bg-clip-text px-1 bg-gradient-to-r from-secondary to-accent 
+						text-sm  m-0 italic text-center`}
+					>
+						Smart Fin
+					</h1>
+				{/if}
+			</div>
 		</div>
 		<ul class="grow flex flex-col justify-between pl-0">
 			<div>
@@ -76,7 +89,7 @@
 							}`}}"
 						>
 							<a
-								class={`p-0 w-full m-0 font-medium transition-all flex items-center gap-3`}
+								class={`p-0 w-full m-0 font-medium transition-all flex items-center`}
 								href={item.url}
 								data-sveltekit-preload-data
 								data-sveltekit-preload-code
@@ -86,9 +99,13 @@
 										currentPage == item.url && 'bg-gradient-to-r from-base-200 to-base-100'
 									} px-8 py-4 group-hover:bg-gradient-to-r from-base-200 to-base-100 group-hover:text-secondary`}
 								>
-									<Icon name={item.icon} className="text-2xl font-normal" />
+									<Tooltip className="tooltip-right items-center flex gap-3" tip={item?.label}>
+										<Icon name={item.icon} className="text-2xl font-normal" />
+									</Tooltip>
 								</div>
-								<span class={`${collapsed ? 'hidden' : 'inline'}`}>{item.label}</span>
+								{#if !collapsed}
+									<span transition:slide={{ duration: 800, axis: 'x' }}>{item.label}</span>
+								{/if}
 							</a>
 						</li>
 						{#if !collapsed}
@@ -104,7 +121,6 @@
 									data-sveltekit-preload-code
 									transition:slide={{ duration: 100 }}
 								>
-									asd
 									<span class="font-medium"><span class="text-xl">+</span> {subItem?.label}</span>
 								</a>
 							{/each}
