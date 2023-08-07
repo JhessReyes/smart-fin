@@ -1,8 +1,7 @@
 <script lang="ts">
-	import { slide } from 'svelte/transition';
+	import { fade, slide } from 'svelte/transition';
 	import { Icon, Tooltip } from '../atoms';
 	import { appState } from '$lib/stores';
-	import { sineIn, sineInOut, sineOut } from 'svelte/easing';
 
 	export let collapsed: boolean = false;
 	export let title: string = 'Inicio';
@@ -73,6 +72,7 @@
 					<h1
 						class={`text-transparent bg-clip-text px-1 bg-gradient-to-r from-secondary to-accent 
 						text-sm  m-0 italic text-center`}
+						in:fade
 					>
 						Smart Fin
 					</h1>
