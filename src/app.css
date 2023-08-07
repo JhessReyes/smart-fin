@@ -24,3 +24,35 @@
         line-height: 1.25rem;
     }
 }
+
+@layer components {
+    /* estilos para la tabla básica */
+    .table-primary {
+        @apply border-separate border-spacing-y-2
+    }
+
+    .table-primary tr,
+    th {
+        @apply p-4;
+    }
+
+    .table-primary>tbody>tr,
+    td {
+        @apply p-4 bg-base-100;
+    }
+   
+
+    .table-primary>tbody>tr {
+        @apply p-4 hover:shadow-xl cursor-pointer;
+    }
+
+    .table-primary>tbody>tr td:first-child {
+        border-top-left-radius: 0.625rem;
+        border-bottom-left-radius: 0.625rem;
+    }
+
+    .table-primary>tbody>tr td:last-child {
+        border-top-right-radius: 0.625rem;
+        border-bottom-right-radius: 0.625rem;
+    }
+}

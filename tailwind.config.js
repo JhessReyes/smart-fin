@@ -17,10 +17,10 @@ export default {
           "accent": "#37474F",
           "neutral": "#97FEED",
           "base-200": "#DEEBE8",
-          "base-300": "#37474F",
+          // "base-300": "#37474F",
         },
         dark: {
-          ...require("daisyui/src/theming/themes")["[data-theme=forest]"],
+          ...require("daisyui/src/theming/themes")["[data-theme=night]"],
           "primary": "#51D28980",
           "secondary": "#1DB990",
           "accent": "#37474F",

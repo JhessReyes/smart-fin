@@ -15,6 +15,7 @@
 		"test:unit": "vitest"
 	},
 	"devDependencies": {
+		"@faker-js/faker": "^8.0.2",
 		"@playwright/test": "^1.28.1",
 		"@sveltejs/adapter-auto": "^2.0.0",
 		"@sveltejs/kit": "^1.20.4",
@@ -37,5 +38,14 @@
 		"vite": "^4.4.2",
 		"vitest": "^0.32.2"
 	},
-	"type": "module"
+	"type": "module",
+	"dependencies": {
+		"@svelteuidev/composables": "^0.14.0",
+		"@svelteuidev/core": "^0.14.0",
+		"@svelteuidev/dates": "^0.14.0",
+		"@svelteuidev/motion": "^0.14.0",
+		"@svelteuidev/preprocessors": "^0.14.0",
+		"@svelteuidev/prism": "^0.14.0",
+		"dayjs": "^1.11.9"
+	}
 }
