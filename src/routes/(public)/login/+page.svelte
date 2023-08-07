@@ -26,9 +26,9 @@
 		</p>
 		<div class="w-full max-w-sm">
 			<Button
-				className="btn-circle w-full bg-transparent border border-secondary text-base-300 hover:bg-accent hover:text-base-200 dark:text-white dark:hover:text-primary"
+				className="btn-circle w-full justify-center text-center flex bg-transparent border border-secondary text-secondary hover:bg-accent hover:text-base-200 dark:text-white dark:hover:text-primary"
 			>
-				<img src="/google-color.svg" alt="Google SigIn" />
+				<img src="/google-color.svg" alt="Google SigIn" class="m-0" />
 				Continuar con Google
 			</Button>
 		</div>

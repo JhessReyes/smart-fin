@@ -1,6 +1,5 @@
 <script lang="ts">
-	import { scale } from 'svelte/transition';
-	import { elasticIn, sineIn, sineInOut, sineOut } from 'svelte/easing';
+	import { fly } from 'svelte/transition';
 	import { Loading } from '../atoms';
 
 	export let className: string = '';
@@ -8,16 +7,16 @@
 </script>
 
 <div
-	in:scale={{ duration: 500, easing: sineIn }}
-	out:scale={{ duration: 250, easing: sineOut }}
-	class={`h-full overflow-hidden ${className}`}
+	in:fly={{ x: -5, duration: 300, delay: 300 }}
+	out:fly={{ x: 5, duration: 300 }}
+	class={`p-5 h-full ${className}`}
 >
 	{#if loading}
 		{#if $$slots.loader}
 			<slot name="loader" />
 		{:else}
 			<div class="flex items-center justify-center h-full font-medium">
-				<Loading className="loading-lg" />
+				<Loading className="loading-lg loading-dots text-secondary" />
 			</div>
 		{/if}
 	{:else}
