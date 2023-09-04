@@ -1,4 +1,5 @@
 <script>
+	import { goto } from '$app/navigation';
 	import { Button, Input } from '$lib/components/atoms/';
 	import '../../../app.css';
 </script>
@@ -48,8 +49,7 @@
 				className="border-none drop-shadow max-w-sm"
 			/>
 		</div>
-		<Button className="drop-shadow w-full max-w-sm btn-primary">
-			<!-- on:click={(e) => signInWithEmailAndPassword(email, password)} -->
+		<Button className="drop-shadow w-full max-w-sm btn-primary" on:click={() => goto('/')}>
 			<!-- <Icon name="login" className="mr-2" /> -->
 			Entrar
 		</Button>

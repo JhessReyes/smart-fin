@@ -1,0 +1,6 @@
+export { default as Cancel } from './Cancel.svelte'
+export { default as Check } from './Check.svelte'
+export { default as Fire } from './Fire.svelte'
+export { default as Peace } from './Peace.svelte'
+export { default as Telegram } from './Telegram.svelte'
+export { default as Warning } from './Warning.svelte'

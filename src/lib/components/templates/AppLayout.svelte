@@ -1,9 +1,8 @@
 <script lang="ts">
-	import { fade, slide } from 'svelte/transition';
+	import { fade, fly, slide } from 'svelte/transition';
 	import { Icon, Tooltip } from '../atoms';
 	import { appState } from '$lib/stores';
 
-	export let collapsed: boolean = false;
 	export let title: string = 'Inicio';
 	export let currentPage: string = '/';
 	export let theme: string = 'light';
@@ -18,11 +17,6 @@
 				label: 'Transacciones',
 				icon: 'calculate',
 				url: '/transactions'
-			},
-			{
-				label: 'Gastos',
-				icon: 'shopping_cart',
-				url: '/expenses'
 			},
 			{
 				label: 'Categorías',
@@ -46,38 +40,43 @@
 </script>
 
 <div class="prose max-w-none flex h-screen bg-base-200">
-	<nav class="flex flex-col w-auto bg-base-100 rounded-r-3xl relative">
+	<nav class="flex flex-col w-auto bg-base-100 rounded-r-xl relative">
 		<!-- svelte-ignore a11y-no-static-element-interactions -->
 		<!-- svelte-ignore a11y-click-events-have-key-events -->
 		<div
-			class={`h-24 flex rounded-tr-xl cursor-pointer  transition duration-500 ease-in-out delay-300 ${
-				collapsed ? 'p-4' : ' px-8 '
-			}`}
-			on:click={() => (collapsed = !collapsed)}
+			class={`h-20 cursor-pointer p-4  ${!$appState.collapsed && 'pt-8'}`}
+			on:click={() => ($appState.collapsed = !$appState.collapsed)}
 		>
-			<div class="flex items-center justify-between {collapsed ? 'flex-col' : 'flex-row'}">
-				<Icon
-					name="attach_money"
-					className="text-secondary px-1 text-4xl bg-base-200 rounded-full"
-				/>
-				{#if !collapsed}
+			{#if !$appState.collapsed}
+				<div
+					transition:slide={{ duration: 500, axis: 'x' }}
+					class="flex items-center justify-between flex-row h-full"
+				>
+					<Icon
+						name="attach_money"
+						className="text-secondary px-1 text-4xl bg-base-200 rounded-full"
+					/>
 					<h1
 						class={`text-transparent bg-clip-text px-1 bg-gradient-to-r from-secondary to-accent 
-						 w-full m-0 italic text-center`}
-						transition:slide={{ duration: 800, axis: 'x' }}
+						 w-full m-0 italic text-center text-4xl`}
 					>
 						SmartFin
 					</h1>
-				{:else}
+				</div>
+			{:else}
+				<div in:slide={{ delay: 600 }} class="flex items-center justify-between flex-col h-full">
+					<Icon
+						name="attach_money"
+						className="text-secondary px-1 text-4xl bg-base-200 rounded-full"
+					/>
 					<h1
 						class={`text-transparent bg-clip-text px-1 bg-gradient-to-r from-secondary to-accent 
-						text-sm  m-0 italic text-center`}
-						in:fade
+						text-sm m-0 italic text-center`}
 					>
 						Smart Fin
 					</h1>
-				{/if}
-			</div>
+				</div>
+			{/if}
 		</div>
 		<ul class="grow flex flex-col justify-between pl-0">
 			<div>
@@ -89,7 +88,7 @@
 							}`}}"
 						>
 							<a
-								class={`p-0 w-full m-0 font-medium transition-all flex items-center`}
+								class={`p-0 w-full m-0 font-medium flex items-center`}
 								href={item.url}
 								data-sveltekit-preload-data
 								data-sveltekit-preload-code
@@ -103,16 +102,16 @@
 										<Icon name={item.icon} className="text-2xl font-normal" />
 									</Tooltip>
 								</div>
-								{#if !collapsed}
-									<span transition:slide={{ duration: 800, axis: 'x' }}>{item.label}</span>
+								{#if !$appState.collapsed}
+									<span transition:slide={{ duration: 500, axis: 'x' }}>{item.label}</span>
 								{/if}
 							</a>
 						</li>
-						{#if !collapsed}
+						{#if !$appState.collapsed}
 							{#each item?.submenu || [] as subItem}
 								<a
 									href={subItem?.url}
-									class={`w-full px-5 py-3 m-0 pl-16 font-medium transition-all flex items-center gap-3  hover:bg-base-200 ${
+									class={`w-full px-5 py-3 m-0 pl-16 font-medium flex items-center gap-3  hover:bg-base-200 ${
 										currentPage == subItem.url
 											? 'bg-gradient-to-l from-base-200 to-base-100 hover:drop-shadow-sm'
 											: ''
@@ -131,26 +130,42 @@
 					{/if}
 				{/each}
 			</div>
+
 			<div
 				class={`flex items-center ${
-					collapsed ? 'flex-col' : 'flex-row justify-between card shadow-xl p-5 m-2'
+					$appState.collapsed ? 'flex-col' : 'flex-row justify-between card px-6'
 				} gap-5`}
 			>
 				<div class="avatar">
 					<div class="w-10 rounded-lg bg-base-200 text-center" />
 				</div>
-				<div class={`flex gap-5 ${collapsed ? 'flex-col' : 'flex-row'}`}>
-					<label class="swap swap-rotate">
-						<input
-							type="checkbox"
-							checked={$appState.theme}
-							on:change={() => ($appState.theme = !$appState.theme)}
-						/>
-						<Icon name="light_mode" className="swap-off" />
-						<Icon name="dark_mode" className="swap-on" />
-					</label>
-					<Icon name="logout" className="text-2xl" />
-				</div>
+				{#if !$appState.collapsed}
+					<div in:slide={{ axis: 'x' }} class={`flex gap-5 flex-row`}>
+						<label class="swap swap-rotate">
+							<input
+								type="checkbox"
+								checked={$appState.theme}
+								on:change={() => ($appState.theme = !$appState.theme)}
+							/>
+							<Icon name="light_mode" className="swap-off" />
+							<Icon name="dark_mode" className="swap-on" />
+						</label>
+						<Icon name="logout" className="text-2xl" />
+					</div>
+				{:else}
+					<div in:slide={{ axis: 'x', delay: 200 }} class={`flex gap-5 flex-col`}>
+						<label class="swap swap-rotate">
+							<input
+								type="checkbox"
+								checked={$appState.theme}
+								on:change={() => ($appState.theme = !$appState.theme)}
+							/>
+							<Icon name="light_mode" className="swap-off" />
+							<Icon name="dark_mode" className="swap-on" />
+						</label>
+						<Icon name="logout" className="text-2xl" />
+					</div>
+				{/if}
 			</div>
 		</ul>
 	</nav>

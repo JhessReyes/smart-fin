@@ -1,35 +1,42 @@
 <script lang="ts">
+	import { TRANSACTIONS } from '$lib/api/transactions';
+	import { queryFetch } from '$lib/client';
 	import { Module, Table } from '$lib/components/organisms';
-	import { appState } from '$lib/stores';
+	import { addToast, appState } from '$lib/stores';
 	import type { TableHead } from '$lib/types';
-	import { faker } from '@faker-js/faker';
+	import { createQuery } from '@tanstack/svelte-query';
 
 	$appState.title = 'Transacciones';
 	let headers: Array<TableHead> = [
-		{ sortable:true, key: 'name', label: 'Nombre' },
-		{ sortable:true, key: 'description', label: 'Descripcion' },
-		{ sortable:true, key: 'amount', label: 'Monto' },
-		{ sortable:true, key: 'category', label: 'Categoria' }
+		{ sortable: true, key: 'name', label: 'Nombre' },
+		{ sortable: true, key: 'description', label: 'Descripcion' },
+		{ sortable: true, key: 'amount', label: 'Monto' },
+		{ sortable: true, key: 'category', label: 'Categoria' }
 	];
 
 	let rows: any[] = [];
 
-	const name = () => {
-		for (let i = 0; i < 50; i++) {
-			const element = {
-				name: faker.person.firstName(),
-				description: faker.person.jobDescriptor(),
-				amount: faker.finance.amount(),
-				category: faker.person.jobArea()
-			};
-			rows.push(element);
+	const queryTransactions = createQuery({
+		...queryFetch(['transactions'], {
+			query: TRANSACTIONS,
+			variables: {
+				options: {
+					limit: 1000,
+					page: 1
+				}
+			}
+		}),
+		refetchOnMount: 'always',
+		onSuccess: async (response) => {
+			console.log(response);
+			if (response?.errors || !response?.data) {
+				addToast('Fail!', 'Ocurrió un error al obtener las transacciones', 'error');
+			} else rows = await response?.data?.transactions?.rows;
 		}
-	};
-
-	$: name();
+	});
 </script>
 
-<Module loading={false}>
+<Module loading={$queryTransactions.isLoading || $queryTransactions.isRefetching}>
 	<Table
 		className="table-primary"
 		{headers}
