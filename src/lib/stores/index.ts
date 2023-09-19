@@ -1,3 +1,4 @@
+import { AccessToken } from './../schemas/index';
 import { browser } from '$app/environment';
 import { AppState } from '$lib/schemas';
 import { writable } from "svelte/store";
@@ -17,7 +18,8 @@ appState.subscribe((value) => {
     }
 })
 
-const initialAccessTokenValue = browser ? JSON.parse(window.sessionStorage.getItem("accessToken") ?? "") : null;
+//@ts-ignore
+const initialAccessTokenValue = browser ? new AccessToken(JSON.parse(window.sessionStorage.getItem("accessToken")) ?? new AccessToken()) : null;
 
 export let accessTokenStore = writable(initialAccessTokenValue);
 

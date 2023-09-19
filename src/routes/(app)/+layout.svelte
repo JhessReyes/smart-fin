@@ -6,7 +6,7 @@
 	import { Button, Icon } from '$lib/components/atoms';
 	import { QueryClientProvider } from '@tanstack/svelte-query';
 	import type { PageData } from './$types';
-	import Toast from '$lib/components/molecules/toast/Toast.svelte';
+	import { Toast } from '$lib/components/molecules';
 
 	export let data: PageData;
 </script>

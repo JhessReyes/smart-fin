@@ -1,10 +1,23 @@
-<script>
-	import { goto } from '$app/navigation';
+<script lang="ts">
 	import { Button, Input } from '$lib/components/atoms/';
+	import { Toast } from '$lib/components/molecules';
+	import { AuthenticationService } from '$lib/services/auth';
 	import '../../../app.css';
+
+	let loading = false;
+	let emailAndPassword: { email: string; password: string } = { email: '', password: '' };
+	const authService = new AuthenticationService();
+	const handleAuth = {
+		emailAndPassword: async () => {
+			loading = true;
+			await authService.signInWithEmailAndPassword(emailAndPassword);
+			loading = false;
+		}
+	};
 </script>
 
 <div class="grid md:grid-cols-2 h-screen prose max-w-none bg-base-100">
+	<Toast />
 	<div class="md:flex flex-col justify-between gap-5 drop-shadow-md font-bold text-6xl hidden">
 		<h1 class="text-5xl capitalize italic m-0 drop-shadow-sm px-12">
 			<br /> Calcula
@@ -39,6 +52,7 @@
 			<Input
 				props={{ placeholder: 'user@smartfin.com', label: 'Correo electrónico', type: 'email' }}
 				className="border-none drop-shadow"
+				bind:value={emailAndPassword.email}
 			/>
 		</div>
 
@@ -47,10 +61,13 @@
 			<Input
 				props={{ placeholder: '********', label: 'Password', type: 'password' }}
 				className="border-none drop-shadow max-w-sm"
+				bind:value={emailAndPassword.password}
 			/>
 		</div>
-		<Button className="drop-shadow w-full max-w-sm btn-primary" on:click={() => goto('/')}>
-			<!-- <Icon name="login" className="mr-2" /> -->
+		<Button
+			className="drop-shadow w-full max-w-sm btn-primary {loading && 'loading'}"
+			on:click={handleAuth.emailAndPassword}
+		>
 			Entrar
 		</Button>
 	</div>

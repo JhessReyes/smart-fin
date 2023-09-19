@@ -45,3 +45,13 @@ export class AppState {
         this.settings = settings
     }
 }
+
+export class AccessToken {
+    token: string;
+
+    constructor({
+        token = ''
+    } = {}) {
+        this.token = token
+    }
+}
