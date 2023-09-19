@@ -44,7 +44,7 @@
 	});
 </script>
 
-<Module loading={$queryTransactions.isLoading || $queryTransactions.isRefetching}>
+<Module loading={$queryTransactions?.isLoading || $queryTransactions?.isRefetching}>
 	<Table
 		className="table-primary"
 		{headers}
