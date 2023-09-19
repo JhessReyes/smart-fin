@@ -11,6 +11,9 @@
 	export let data: PageData;
 </script>
 
+<svelte:head>
+	<link rel="stylesheet" href="/global.css" />
+</svelte:head>
 <QueryClientProvider client={data?.queryClient}>
 	<AppLayout
 		theme={$appState?.theme ? 'light' : 'dark' || 'light'}

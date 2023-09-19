@@ -1,0 +1,10 @@
+:root {
+    --palette-white: var(--b);
+    --palette-main-1: var(--b);
+    --palette-main-2: var(--b);
+    --palette-noactive-1: var(--b);
+    --palette-noactive-3: var(--b);
+    --palette-noactive-4: var(--b);
+    --palette-noactive-5: var(--b);
+    --palette-noactive-6: var(--b);
+}

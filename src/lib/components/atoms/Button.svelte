@@ -10,7 +10,7 @@
 	export { className as class };
 </script>
 
-<button {disabled} {type} class={`btn ${className}`} on:click on:keydown on:keyup on:keypress>
+<button {disabled} {type} class={`btn normal-case ${className}`} on:click on:keydown on:keyup on:keypress>
 	{#if $$slots.icon}
 		<slot name="icon" />
 	{:else if iconProps}
