@@ -33,15 +33,12 @@ export const mutationFetch = async (variables: any) => {
     const authorization = token ? token : '';
     const authService = new AuthenticationService()
     await authService.verifyToken(token)
-    let data = await (await fetch(API_URL, {
+    return fetch(API_URL, {
         method: 'POST',
         headers: {
             'Content-Type': 'application/json',
             'Authorization': `Bearer ${authorization}`
         },
         body: JSON.stringify(variables)
-    })
-    ).json()
-    return data
-
+    }).then(res => res.json())
 }

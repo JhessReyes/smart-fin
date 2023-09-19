@@ -15,3 +15,16 @@ export let TRANSACTIONS = `query Transactions($page: Int, $limit: Int) {
     }
   }
 `
+
+export let ADDTRANSACTION = `mutation CreateTransaction($input: CreateTransactionInput!) {
+  createTransaction(input: $input) {
+    category {
+      id
+      name
+    }
+    id
+    description
+    date
+    amount
+  }
+}`
