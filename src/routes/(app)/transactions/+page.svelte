@@ -1,7 +1,9 @@
 <script lang="ts">
+	import { goto } from '$app/navigation';
 	import { TRANSACTIONS } from '$lib/api/transactions';
 	import { queryFetch } from '$lib/client';
-	import { Icon } from '$lib/components/atoms';
+	import { Button, Icon } from '$lib/components/atoms';
+	import { Search } from '$lib/components/molecules';
 	import { Module, Table } from '$lib/components/organisms';
 	import { addToast, appState } from '$lib/stores';
 	import type { TableHead } from '$lib/types';
@@ -45,6 +47,14 @@
 </script>
 
 <Module loading={$queryTransactions?.isLoading || $queryTransactions?.isRefetching}>
+	<div slot="actions" class="flex w-full justify-between">
+		<Search />
+		<Button
+			class="btn-primary btn-md"
+			iconProps={{ name: 'add' }}
+			on:click={() => goto('transactions/create')}>Agregar Transaccion</Button
+		>
+	</div>
 	<Table
 		className="table-primary"
 		{headers}

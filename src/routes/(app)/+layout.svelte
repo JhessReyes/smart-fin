@@ -20,11 +20,10 @@
 		<Toast />
 		<svelte:fragment slot="actions">
 			<Button
-				className="p-2 btn-ghost btn-circle m-0"
+				class="p-2 btn-ghost btn-circle m-0"
 				on:click={() => addToast('Welcome!', 'Let’s make something great!', 'default')}
-			>
-				<Icon className="" name={'notifications'} />
-			</Button>
+				iconProps={{ name: 'notifications' }}
+			/>
 		</svelte:fragment>
 		<slot><!-- app fallback --></slot>
 	</AppLayout>

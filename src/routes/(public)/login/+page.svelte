@@ -40,7 +40,7 @@
 		</p>
 		<div class="w-full max-w-sm">
 			<Button
-				className="btn-circle w-full justify-center text-center flex bg-transparent border border-secondary text-secondary hover:bg-accent hover:text-base-200 dark:text-white dark:hover:text-primary"
+				class="btn-circle w-full justify-center text-center flex bg-transparent border border-secondary text-secondary hover:bg-accent hover:text-base-200 dark:text-white dark:hover:text-primary"
 			>
 				<img src="/google-color.svg" alt="Google SigIn" class="m-0" />
 				Continuar con Google
@@ -51,7 +51,7 @@
 			<span class="label mb-1 p-0 text-sm">Correo electrónico</span>
 			<Input
 				props={{ placeholder: 'user@smartfin.com', label: 'Correo electrónico', type: 'email' }}
-				className="border-none drop-shadow"
+				class="border-none drop-shadow"
 				bind:value={emailAndPassword.email}
 			/>
 		</div>
@@ -60,12 +60,12 @@
 			<span class="label mb-1 p-0 text-sm">Contraseña</span>
 			<Input
 				props={{ placeholder: '********', label: 'Password', type: 'password' }}
-				className="border-none drop-shadow max-w-sm"
+				class="border-none drop-shadow max-w-sm"
 				bind:value={emailAndPassword.password}
 			/>
 		</div>
 		<Button
-			className="drop-shadow w-full max-w-sm btn-primary {loading && 'loading'}"
+			class="drop-shadow w-full max-w-sm btn-primary {loading && 'loading'}"
 			on:click={handleAuth.emailAndPassword}
 		>
 			Entrar

@@ -85,7 +85,16 @@ export default {
     themes: [
       {
         light: {
-          ...require("daisyui/src/theming/themes")["[data-theme=emerald]"],
+          ...require("daisyui/src/theming/themes")["[data-theme=night]"],
+
+          "color-scheme": "light",
+          "primary-content": "#223D30",
+          "secondary-content": "#f9fafb",
+          "accent-content": "#f9fafb",
+          "neutral-content": "#f9fafb",
+          "base-100": "#ffffff",
+          "base-content": "#333c4d",
+
           "primary": "#51D28980",
           "secondary": "#0B666A",
           "accent": "#37474F",
