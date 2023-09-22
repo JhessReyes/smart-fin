@@ -16,4 +16,6 @@
 	{...props}
 	{placeholder}
 	{required}
+	on:change
+	on:input
 />

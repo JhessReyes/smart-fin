@@ -55,3 +55,14 @@ export class AccessToken {
         this.token = token
     }
 }
+
+export class Category {
+    name: string;
+    id: any;
+
+    constructor({
+        name = ''
+    } = {}) {
+        this.name = name
+    }
+}

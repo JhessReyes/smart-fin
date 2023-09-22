@@ -23,15 +23,18 @@
 	let rows: any[] = [];
 
 	const queryTransactions = createQuery({
-		...queryFetch(['transactions'], {
-			query: TRANSACTIONS,
-			variables: {
-				options: {
-					limit: 1000,
-					page: 1
+		queryKey: ['transactions'],
+		queryFn: async () => {
+			return queryFetch({
+				query: TRANSACTIONS,
+				variables: {
+					options: {
+						limit: 1000,
+						page: 1
+					}
 				}
-			}
-		}),
+			})();
+		},
 		refetchOnMount: 'always',
 		onSuccess: async (response) => {
 			console.log(response);
