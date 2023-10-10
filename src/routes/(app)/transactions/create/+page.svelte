@@ -2,12 +2,12 @@
 	import { Button, Input, Toggle } from '$lib/components/atoms';
 	import DropZone from '$lib/components/atoms/DropZone.svelte';
 	// @ts-ignore
-	import { Select } from 'svelte-atoms';
 	import { Image, Upload } from '$lib/components/icons';
 	import { appState } from '$lib/stores';
 	import { createMutation } from '@tanstack/svelte-query';
 	import { mutationFetch } from '$lib/client';
 	import { ADDTRANSACTION } from '$lib/api/transactions';
+	import { SelectCategories } from '$lib/modules/categories/components';
 
 	let request = 'ADD';
 	let transaction = {};
@@ -67,15 +67,7 @@
 	>
 		<div class="flex flex-col justify-between h-full p-12 overflow-auto">
 			<div class="flex flex-col gap-4 w-full">
-				<Select
-					bind:value={transaction.categoryId}
-					options={[
-						{ label: 'Food', value: '5d9b17ed-5555-4d7d-892d-73930fde0ee4' },
-						{ label: 'Gastos Varios', value: '04fba686-1509-461b-b8c6-11efd4bd3b5d' }
-					]}
-					placeholder="Agregar Categoria"
-					size="medium"
-				/>
+				<SelectCategories bind:value={transaction.categoryId} />
 				<Input
 					placeholder="Monto de la Transacción"
 					props={{ type: 'number' }}

@@ -35,23 +35,19 @@
 	});
 </script>
 
-<div class="flex items-center bg-gray-100 rounded-full px-1 {className}">
-	<Icon
-		name="search"
-		className="text-black !bg-gray-100 rounded-full !p-2 cursor-pointer"
-		on:click={show}
-	/>
+<div class="flex items-center bg-base-100 rounded-full px-1 {className}">
+	<Icon name="search" className="bg-base-100 rounded-full !p-2 cursor-pointer" on:click={show} />
 	{#if open}
 		<div transition:slide|local={{ axis: 'x', duration: 200, delay: 50 }} class="flex items-center">
 			<input
 				bind:this={search}
 				bind:value
 				{placeholder}
-				class="input-md input !bg-transparent !outline-none !border-none !bg-gray-100 !p-0"
+				class="input-md input !bg-transparent !outline-none !border-none !bg-base-100 !p-0"
 			/>
 			<Icon
 				name="cancel"
-				className="text-black !bg-gray-100 rounded-full !p-2 cursor-pointer"
+				className="bg-base-100 rounded-full !p-2 cursor-pointer"
 				on:click={clear}
 			/>
 		</div>

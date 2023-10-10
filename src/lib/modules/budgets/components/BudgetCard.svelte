@@ -1,7 +1,13 @@
 <script lang="ts">
-	import { Icon } from '../atoms';
+	import { Icon } from '$lib/components/atoms';
 
-	export let title: string = 'Chris Newton';
+	export let title: string = 'Restaurantes y Cafe';
+	export let description: string = new Date().toLocaleDateString(undefined, {
+		weekday: 'long',
+		year: 'numeric',
+		month: 'long',
+		day: 'numeric'
+	});
 	export let background: string = 'bg-success';
 	export let progressProps: object = {};
 	export let iconProps: object = {};
@@ -21,7 +27,7 @@
 <!-- svelte-ignore a11y-click-events-have-key-events -->
 <!-- svelte-ignore a11y-no-static-element-interactions -->
 <div
-	class={`card bg-base-100 flex flex-row gap-4 rounded-md p-5 ${className} shadow-lg hover:bg-base-200`}
+	class={`card bg-base-200 flex flex-row gap-4 rounded-md p-5 ${className} shadow-lg hover:bg-base-200`}
 	on:click
 >
 	<Icon
@@ -31,8 +37,23 @@
 	/>
 	<div class="flex flex-col gap-2 w-full">
 		<div class="flex justify-between">
-			<h2 class="m-0">{title}</h2>
-			<slot><!-- optional fallback --></slot>
+			<span>
+				<h2 class="m-0">{title}</h2>
+				<span class="m-0">{description}</span>
+			</span>
+			<div class="flex gap-4 items-center">
+				<span>Q. 500.00</span>
+				<div class="flex gap-2">
+					<Icon
+						name="push_pin"
+						className="rounded-xl bg-info w-10 h-10 flex items-center justify-center"
+					/>
+					<Icon
+						name="close"
+						className="rounded-xl bg-info w-10 h-10 flex items-center justify-center"
+					/>
+				</div>
+			</div>
 		</div>
 		<progress class="progress w-full {background}" value={random()} max="100" {...progressProps} />
 	</div>

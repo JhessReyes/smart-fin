@@ -65,7 +65,7 @@
 			/>
 		</div>
 		<Button
-			class="drop-shadow w-full max-w-sm btn-primary {loading && 'loading'}"
+			class="drop-shadow w-full max-w-sm btn-primary {loading && 'loading loading-bars !loading-xs btn-outline'}"
 			on:click={handleAuth.emailAndPassword}
 		>
 			Entrar

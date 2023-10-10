@@ -19,13 +19,13 @@ appState.subscribe((value) => {
 })
 
 //@ts-ignore
-const initialAccessTokenValue = browser ? new AccessToken(JSON.parse(window.sessionStorage.getItem("accessToken")) ?? new AccessToken()) : null;
+const initialAccessTokenValue = browser ? new AccessToken(JSON.parse(window.localStorage.getItem("accessToken")) ?? new AccessToken()) : null;
 
 export let accessTokenStore = writable(initialAccessTokenValue);
 
 accessTokenStore.subscribe((value) => {
     if (browser) {
-        window.sessionStorage.setItem(
+        window.localStorage.setItem(
             "accessToken",
             JSON.stringify(value)
         );

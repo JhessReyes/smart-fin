@@ -28,6 +28,9 @@ export class AuthenticationService implements IAuthenticationService {
                 }
                 addToast('Fail!', 'Failed to SignIn with Email and Password', 'error');
                 return false
+            }).catch((O_o) => {
+                addToast('Fail!', "Ocurrió un problema al hacer la consulta", 'error')
+                return false
             });
         return res
     }
