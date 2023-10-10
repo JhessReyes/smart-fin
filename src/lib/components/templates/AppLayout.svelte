@@ -1,6 +1,7 @@
 <script lang="ts">
 	import { fade, fly, slide } from 'svelte/transition';
-	import { Icon, Tooltip } from '../atoms';
+	import { Icon as MaterialIcon, Tooltip } from '../atoms';
+	import Icon from '@iconify/svelte';
 	import { appState } from '$lib/stores';
 
 	export let title: string = 'Inicio';
@@ -52,7 +53,7 @@
 					transition:slide={{ duration: 500, axis: 'x' }}
 					class="flex items-center justify-between flex-row h-full"
 				>
-					<Icon
+					<MaterialIcon
 						name="attach_money"
 						className="text-secondary px-1 text-4xl bg-base-200 rounded-full"
 					/>
@@ -65,7 +66,7 @@
 				</div>
 			{:else}
 				<div in:slide={{ delay: 600 }} class="flex items-center justify-between flex-col h-full">
-					<Icon
+					<MaterialIcon
 						name="attach_money"
 						className="text-secondary px-1 text-4xl bg-base-200 rounded-full"
 					/>
@@ -99,7 +100,7 @@
 									} px-8 py-4 group-hover:bg-gradient-to-r from-base-200 to-base-100 group-hover:text-secondary`}
 								>
 									<Tooltip className="tooltip-right items-center flex gap-3" tip={item?.label}>
-										<Icon name={item.icon} className="text-2xl font-normal" />
+										<MaterialIcon name={item.icon} className="text-2xl font-normal" />
 									</Tooltip>
 								</div>
 								{#if !$appState.collapsed}
@@ -147,10 +148,10 @@
 								checked={$appState.theme}
 								on:change={() => ($appState.theme = !$appState.theme)}
 							/>
-							<Icon name="light_mode" className="swap-off" />
-							<Icon name="dark_mode" className="swap-on" />
+							<Icon icon="line-md:sun-rising-loop" class="swap-off h-7 w-7" />
+							<Icon icon="line-md:moon-rising-alt-loop" class="swap-on h-7 w-7" />
 						</label>
-						<Icon name="logout" className="text-2xl" />
+						<MaterialIcon name="logout" className="text-2xl" />
 					</div>
 				{:else}
 					<div in:slide={{ axis: 'x', delay: 200 }} class={`flex gap-5 flex-col`}>
@@ -160,10 +161,10 @@
 								checked={$appState.theme}
 								on:change={() => ($appState.theme = !$appState.theme)}
 							/>
-							<Icon name="light_mode" className="swap-off" />
-							<Icon name="dark_mode" className="swap-on" />
+							<Icon icon="line-md:sun-rising-loop" class="swap-off h-7 w-7" />
+							<Icon icon="line-md:moon-rising-alt-loop" class="swap-on h-7 w-7" />
 						</label>
-						<Icon name="logout" className="text-2xl" />
+						<MaterialIcon name="logout" className="text-2xl" />
 					</div>
 				{/if}
 			</div>
@@ -173,7 +174,7 @@
 		<header class="h-12 shrink-0 flex gap-5 w-full justify-between">
 			<div class="flex items-center gap-1">
 				<div class="flex items-center gap-5">
-					<!-- <Icon name={'attach_money'} className="text-4xl font-bold" /> -->
+					<!-- <MaterialIcon name={'attach_money'} className="text-4xl font-bold" /> -->
 					<h1 class="m-0">{title || 'Inicio'}</h1>
 				</div>
 			</div>

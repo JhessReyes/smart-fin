@@ -1,7 +1,7 @@
 <script lang="ts">
-	import { Icon } from '$lib/components/atoms';
-
+	import { Icon as MaterialIcon } from '$lib/components/atoms';
 	export let title: string = 'Restaurantes y Cafe';
+	export let categories: any[] = [];
 	export let description: string = new Date().toLocaleDateString(undefined, {
 		weekday: 'long',
 		year: 'numeric',
@@ -12,7 +12,6 @@
 	export let progressProps: object = {};
 	export let iconProps: object = {};
 	export let className: string = '';
-
 	export { className as class };
 
 	const random = () => {
@@ -22,6 +21,14 @@
 		const numeroAleatorio = Math.floor(numeroDecimal * 101); // Multiplicamos por 101 para incluir el 100
 		return numeroAleatorio;
 	};
+
+	const getLimit = (array: any[]) => {
+		let limit: number = 0;
+		for (let i = 0, l = array.length; i < l; i++) {
+			limit += array[i].amount;
+		}
+		return limit;
+	};
 </script>
 
 <!-- svelte-ignore a11y-click-events-have-key-events -->
@@ -30,7 +37,7 @@
 	class={`card bg-base-200 flex flex-row gap-4 rounded-md p-5 ${className} shadow-lg hover:bg-base-200`}
 	on:click
 >
-	<Icon
+	<MaterialIcon
 		name="pattern"
 		className="rounded-full {background} w-12 h-12 flex items-center justify-center"
 		{...iconProps}
@@ -42,13 +49,13 @@
 				<span class="m-0">{description}</span>
 			</span>
 			<div class="flex gap-4 items-center">
-				<span>Q. 500.00</span>
+				<span> <strong>Limite:</strong> Q. {getLimit(categories)}</span>
 				<div class="flex gap-2">
-					<Icon
+					<MaterialIcon
 						name="push_pin"
 						className="rounded-xl bg-info w-10 h-10 flex items-center justify-center"
 					/>
-					<Icon
+					<MaterialIcon
 						name="close"
 						className="rounded-xl bg-info w-10 h-10 flex items-center justify-center"
 					/>
