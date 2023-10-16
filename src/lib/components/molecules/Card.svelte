@@ -21,7 +21,7 @@
 <!-- svelte-ignore a11y-click-events-have-key-events -->
 <!-- svelte-ignore a11y-no-static-element-interactions -->
 <div
-	class={`card bg-base-100 flex flex-row gap-4 rounded-md p-5 ${className} shadow-lg hover:bg-base-200`}
+	class={`dui-card bg-base-100 flex flex-row gap-4 rounded-md p-5 ${className} shadow-lg hover:bg-base-200`}
 	on:click
 >
 	<Icon
@@ -34,6 +34,6 @@
 			<h2 class="m-0">{title}</h2>
 			<slot><!-- optional fallback --></slot>
 		</div>
-		<progress class="progress w-full {background}" value={random()} max="100" {...progressProps} />
+		<progress class="dui-progress w-full {background}" value={random()} max="100" {...progressProps} />
 	</div>
 </div>

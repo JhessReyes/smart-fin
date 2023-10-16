@@ -1,3 +1,4 @@
+import type { ICategory } from "$lib/interfaces";
 
 export class AppState {
     title: string;
@@ -64,5 +65,25 @@ export class Category {
         name = ''
     } = {}) {
         this.name = name
+    }
+}
+
+export class Budget {
+    id: any
+    name: string
+    status: boolean
+    start: Date
+    end: Date
+    categories: [{
+        amount: GLfloat,
+        category: ICategory
+    }] | any[]
+
+    constructor({ id = undefined, name = '', start = new Date(), end = new Date(), categories = [] } = {}) {
+        this.id = id
+        this.name = name
+        this.start = start
+        this.end = end
+        this.categories = categories
     }
 }

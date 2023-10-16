@@ -4,4 +4,4 @@
 	export { className as class };
 </script>
 
-<input type="checkbox" class="toggle {className}" checked />
+<input type="checkbox" class="dui-toggle {className}" checked />

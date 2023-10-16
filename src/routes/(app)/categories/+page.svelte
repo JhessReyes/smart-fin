@@ -50,9 +50,8 @@
 		},
 		refetchOnMount: 'always',
 		onSuccess: async (response) => {
-			console.log(response);
 			if (response?.errors || !response?.data) {
-				addToast('Fail!', 'Ocurrió un error al obtener las transacciones', 'error');
+				addToast('Fail!', 'Ocurrió un error al obtener las categorias', 'error');
 			} else {
 				categories = await response?.data?.categories;
 			}
@@ -87,13 +86,13 @@
 	}
 </script>
 
-<Drawer bind:open class="drawer-end">
+<Drawer bind:open class="dui-drawer-end">
 	<Module loading={$queryCategories?.isLoading || $queryCategories?.isRefetching}>
 		<div class="flex flex-col gap-10">
 			<div class="flex justify-between">
 				<Search />
 				<Button
-					class="btn-primary btn-md"
+					class="dui-btn-primary dui-btn-md"
 					iconProps={{ name: 'add' }}
 					on:click={() => (open = true)}>Agregar Categoría</Button
 				>
@@ -108,15 +107,15 @@
 				</div>
 			</div>
 			<div>
-				<h2 class="m-0">Tus Categorías</h2>
+				<h2>Tus Categorías</h2>
 				<h6>Todas tus categorías en un solo lugar</h6>
 				<div class="grid grid-cols-4 gap-4 py-4">
 					{#each categories?.rows as category}
 						<Card title={category?.name} class="cursor-pointer">
-							<div class="modal-action">
+							<div class="dui-modal-action">
 								<Icon
 									name="edit"
-									className="rounded-full btn btn-outline btn-warning w-12 h-12 flex items-center justify-center"
+									className="rounded-full dui-btn dui-btn-outline dui-btn-warning w-12 h-12 flex items-center justify-center"
 									on:click={() => {
 										selected = category;
 										console.log(selected);
@@ -125,7 +124,7 @@
 								/>
 								<Icon
 									name="delete"
-									className="rounded-full btn btn-outline btn-error w-12 h-12 flex items-center justify-center"
+									className="rounded-full dui-btn dui-btn-outline dui-btn-error w-12 h-12 flex items-center justify-center"
 									on:click={() => {
 										$deleteCategory.mutate(category);
 									}}
@@ -139,7 +138,7 @@
 	</Module>
 
 	<svelte:fragment slot="drawer-side">
-		<ul class="menu p-4 w-80 min-h-full bg-base-200 text-base-content m-0 gap-2">
+		<ul class="menu w-auto min-h-full bg-base-200 text-base-content px-10 gap-2 m-0">
 			{#key selected}
 				<CategoryRequest category={selected ? selected : new Category()} bind:open />
 			{/key}

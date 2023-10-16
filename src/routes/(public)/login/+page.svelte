@@ -2,7 +2,7 @@
 	import { Button, Input } from '$lib/components/atoms/';
 	import { Toast } from '$lib/components/molecules';
 	import { AuthenticationService } from '$lib/services/auth';
-	import '../../../app.css';
+	import '../../../app.postcss';
 
 	let loading = false;
 	let emailAndPassword: { email: string; password: string } = { email: '', password: '' };

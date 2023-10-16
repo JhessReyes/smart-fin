@@ -68,8 +68,8 @@
 	<span>Nombre</span>
 	<Input placeholder="Nombre de la categoria" bind:value={category.name} />
 
-	<div class="modal-action">
-		<Button class="btn-ghost" on:click={() => (open = false)}>Cacelar</Button>
-		<Button class="btn-primary" type="submit">{category?.id ? 'Actualizar' : 'Guardar'}</Button>
+	<div class="dui-modal-action">
+		<Button class="dui-btn-ghost" on:click={() => (open = false)}>Cacelar</Button>
+		<Button class="dui-btn-primary" type="submit">{category?.id ? 'Actualizar' : 'Guardar'}</Button>
 	</div>
 </form>

@@ -61,7 +61,7 @@
 	$: totalPages = Math.ceil(rows.length / pageSize);
 </script>
 
-<table class={'not-prose ' + className}>
+<table class={'w-full ' + className}>
 	<thead>
 		<tr>
 			{#each headers as header}

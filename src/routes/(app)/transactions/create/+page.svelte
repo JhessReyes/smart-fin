@@ -2,12 +2,13 @@
 	import { Button, Input, Toggle } from '$lib/components/atoms';
 	import DropZone from '$lib/components/atoms/DropZone.svelte';
 	// @ts-ignore
-	import { Image, Upload } from '$lib/components/icons';
+	import { Calendar, Image, Upload } from '$lib/components/icons';
 	import { appState } from '$lib/stores';
 	import { createMutation } from '@tanstack/svelte-query';
 	import { mutationFetch } from '$lib/client';
 	import { ADDTRANSACTION } from '$lib/api/transactions';
 	import { SelectCategories } from '$lib/modules/categories/components';
+	import { DatePicker } from 'stwui';
 
 	let request = 'ADD';
 	let transaction = {};
@@ -58,7 +59,7 @@
 
 <div class="flex justify-between top-0 gap-10 h-full w-full overflow-y-auto py-2">
 	<form
-		class="card shadow-md w-full h-full m-auto bg-base-100 overflow-y-auto"
+		class="dui-card shadow-md w-full h-full m-auto bg-base-100 overflow-y-auto"
 		on:submit={(e) => {
 			e.preventDefault();
 			e.stopPropagation();
@@ -77,7 +78,7 @@
 				<textarea
 					placeholder="Agregar Descripción"
 					required
-					class="textarea textarea-bordered textarea-md h-32"
+					class="dui-textarea dui-textarea-bordered dui-textarea-md h-32"
 					bind:value={transaction.description}
 				/>
 				<div class="flex justify-between">
@@ -90,23 +91,27 @@
 
 				<div>
 					<label for="date" class="text-sm font-medium">Fecha de la transaccion</label>
-					<div class="flex gap-2">
-						<Input props={{ type: 'date' }} />
-						<Input props={{ type: 'time' }} />
-					</div>
+					<DatePicker
+						name="date"
+						showTime
+						format="MMMM D, YYYY - h:mm A"
+						placeholder={'Fecha de la transacción'}
+					>
+						<DatePicker.Trailing slot="trailing" data={Calendar} />
+					</DatePicker>
 				</div>
 			</div>
-			<div class="modal-action">
+			<div class="dui-modal-action">
 				<Button on:click={() => history.back()}>Cacelar</Button>
-				<Button type="submit" class="btn-secondary normal-case">Aceptar</Button>
+				<Button type="submit" class="dui-btn-secondary normal-case">Aceptar</Button>
 			</div>
 		</div>
 	</form>
 	<section
 		role="complementary"
-		class="card shadow-md w-full h-full m-auto p-12 bg-base-100 overflow-y-auto"
+		class="dui-card shadow-md w-full h-full m-auto p-12 bg-base-100 overflow-y-auto"
 	>
-		<div class="card bg-base-200 p-6 h-72 flex items-center justify-center gap-4">
+		<div class="dui-card bg-base-200 p-6 h-72 flex items-center justify-center gap-4">
 			<svelte:component this={Image} class="w-24 h-24" />
 			<div class="flex gap-2 items-center">
 				<svelte:component this={Upload} class="w-4 h-4" />
@@ -122,7 +127,7 @@
 		</div>
 		<h4>Imagenes Adicionales</h4>
 		<div class="grid grid-cols-2 gap-4 h-auto">
-			<div class="card bg-base-200 p-6 h-auto flex flex-col items-center justify-center gap-4">
+			<div class="dui-card bg-base-200 p-6 h-auto flex flex-col items-center justify-center gap-4">
 				<svelte:component this={Image} class="w-24 h-24" />
 				<div class="flex gap-2 items-center">
 					<svelte:component this={Upload} class="w-4 h-4" />

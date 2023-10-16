@@ -3,10 +3,14 @@
 	import { addToast, appState } from '$lib/stores';
 	import { page } from '$app/stores';
 	import { AppLayout } from '$lib/components/templates';
-	import { Button, Icon } from '$lib/components/atoms';
+	import { Button  } from '$lib/components/atoms';
 	import { QueryClientProvider } from '@tanstack/svelte-query';
 	import type { PageData } from './$types';
 	import { Toast } from '$lib/components/molecules';
+	import dayjs from 'dayjs';
+	import 'dayjs/locale/es-us';
+
+	dayjs.locale('es-us');
 
 	export let data: PageData;
 </script>

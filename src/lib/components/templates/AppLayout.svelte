@@ -40,7 +40,7 @@
 	$: toggleTheme(theme);
 </script>
 
-<div class="prose max-w-none flex h-screen bg-base-200">
+<div class="dui-prose prose max-w-none flex h-screen bg-base-200">
 	<nav class="flex flex-col w-auto bg-base-100 rounded-r-xl relative">
 		<!-- svelte-ignore a11y-no-static-element-interactions -->
 		<!-- svelte-ignore a11y-click-events-have-key-events -->
@@ -99,7 +99,7 @@
 										currentPage == item.url && 'bg-gradient-to-r from-base-200 to-base-100'
 									} px-8 py-4 group-hover:bg-gradient-to-r from-base-200 to-base-100 group-hover:text-secondary`}
 								>
-									<Tooltip className="tooltip-right items-center flex gap-3" tip={item?.label}>
+									<Tooltip className="dui-tooltip-right items-center flex gap-3" tip={item?.label}>
 										<MaterialIcon name={item.icon} className="text-2xl font-normal" />
 									</Tooltip>
 								</div>
@@ -133,36 +133,36 @@
 			</div>
 
 			<div
-				class={`flex items-center ${
-					$appState.collapsed ? 'flex-col' : 'flex-row justify-between card px-6'
+				class={`flex items-center py-4 ${
+					$appState.collapsed ? 'flex-col' : 'flex-row justify-between dui-card px-6'
 				} gap-5`}
 			>
-				<div class="avatar">
+				<div class="dui-avatar">
 					<div class="w-10 rounded-lg bg-base-200 text-center" />
 				</div>
 				{#if !$appState.collapsed}
 					<div in:slide={{ axis: 'x' }} class={`flex gap-5 flex-row`}>
-						<label class="swap swap-rotate">
+						<label class="dui-swap dui-swap-rotate">
 							<input
 								type="checkbox"
 								checked={$appState.theme}
 								on:change={() => ($appState.theme = !$appState.theme)}
 							/>
-							<Icon icon="line-md:sun-rising-loop" class="swap-off h-7 w-7" />
-							<Icon icon="line-md:moon-rising-alt-loop" class="swap-on h-7 w-7" />
+							<Icon icon="line-md:sun-rising-loop" class="dui-swap-off h-7 w-7" />
+							<Icon icon="line-md:moon-rising-alt-loop" class="dui-swap-on h-7 w-7" />
 						</label>
 						<MaterialIcon name="logout" className="text-2xl" />
 					</div>
 				{:else}
 					<div in:slide={{ axis: 'x', delay: 200 }} class={`flex gap-5 flex-col`}>
-						<label class="swap swap-rotate">
+						<label class="dui-swap dui-swap-rotate">
 							<input
 								type="checkbox"
 								checked={$appState.theme}
 								on:change={() => ($appState.theme = !$appState.theme)}
 							/>
-							<Icon icon="line-md:sun-rising-loop" class="swap-off h-7 w-7" />
-							<Icon icon="line-md:moon-rising-alt-loop" class="swap-on h-7 w-7" />
+							<Icon icon="line-md:sun-rising-loop" class="dui-swap-off h-7 w-7" />
+							<Icon icon="line-md:moon-rising-alt-loop" class="dui-swap-on h-7 w-7" />
 						</label>
 						<MaterialIcon name="logout" className="text-2xl" />
 					</div>

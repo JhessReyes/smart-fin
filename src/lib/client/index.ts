@@ -3,7 +3,7 @@ import { browser } from '$app/environment';
 import { accessTokenStore } from '$lib/stores';
 import { get } from 'svelte/store';
 
-export const API_URL = 'http://192.168.0.7:3000/api/graphql'
+export const API_URL = 'http://192.168.56.1:3000/api/graphql'
 export const queryFetch = (variables: any) => {
     return async () => {
         let token = browser ? get(accessTokenStore)?.token ?? null : null;

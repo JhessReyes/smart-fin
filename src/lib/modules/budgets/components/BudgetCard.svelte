@@ -34,7 +34,7 @@
 <!-- svelte-ignore a11y-click-events-have-key-events -->
 <!-- svelte-ignore a11y-no-static-element-interactions -->
 <div
-	class={`card bg-base-200 flex flex-row gap-4 rounded-md p-5 ${className} shadow-lg hover:bg-base-200`}
+	class={`dui-card bg-base-200 flex flex-row gap-4 rounded-md p-5 ${className} shadow-lg hover:bg-base-200`}
 	on:click
 >
 	<MaterialIcon
@@ -51,17 +51,23 @@
 			<div class="flex gap-4 items-center">
 				<span> <strong>Limite:</strong> Q. {getLimit(categories)}</span>
 				<div class="flex gap-2">
-					<MaterialIcon
+					<slot><!-- optional fallback --></slot>
+					<!-- <MaterialIcon
 						name="push_pin"
 						className="rounded-xl bg-info w-10 h-10 flex items-center justify-center"
 					/>
 					<MaterialIcon
 						name="close"
 						className="rounded-xl bg-info w-10 h-10 flex items-center justify-center"
-					/>
+					/> -->
 				</div>
 			</div>
 		</div>
-		<progress class="progress w-full {background}" value={random()} max="100" {...progressProps} />
+		<progress
+			class="dui-progress w-full {background}"
+			value={random()}
+			max={getLimit(categories)}
+			{...progressProps}
+		/>
 	</div>
 </div>

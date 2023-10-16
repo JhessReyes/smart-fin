@@ -9,3 +9,13 @@ export interface IAuthenticationService {
     verifyToken?(token: string): Promise<boolean>;
     // Otros métodos relacionados con autenticación
 }
+
+export interface ICategory {
+    id: string
+    name: string
+}
+
+export interface IInputBudgetCategory {
+    categoryId: string
+    amount: number
+}

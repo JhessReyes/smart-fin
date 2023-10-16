@@ -4,13 +4,13 @@
 	export { className as class };
 </script>
 
-<div class="drawer {className}">
-	<input id="my-drawer" type="checkbox" bind:checked={open} class="drawer-toggle" />
-	<div class="drawer-content">
+<div class="dui-drawer {className}">
+	<input id="my-drawer" type="checkbox" bind:checked={open} class="dui-drawer-toggle" />
+	<div class="dui-drawer-content">
 		<slot><!-- optional fallback --></slot>
 	</div>
-	<div class="drawer-side">
-		<label for="my-drawer" class="drawer-overlay" />
-		<slot name="drawer-side"><!-- optional fallback --></slot>
+	<div class="dui-drawer-side">
+		<label for="my-drawer" class="dui-hero-overlay cursor-pointer backdrop-blur" />
+		<slot name="drawer-side" class="backdrop-blur"><!-- optional fallback --></slot>
 	</div>
 </div>

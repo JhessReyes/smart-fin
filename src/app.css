@@ -1,58 +1,69 @@
+/* Write your global styles here, in PostCSS syntax */
 @import url('https://fonts.googleapis.com/css2?family=Inter:wght@100;200;300;400;500;600;700;800;900&family=Nunito:ital,wght@0,200;0,300;0,400;0,500;0,600;0,700;0,800;1,200;1,300;1,400;1,500;1,600;1,700&display=swap');
+@tailwind base;
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
 
 @layer base {
-    html {
-        font-family: Inter;
-    }
+/* 	html {
+		font-family: Inter;
+	}
 
-    h1 {
-        color: #030303;
-        font-size: 1.6875rem;
-        font-style: normal;
-        font-weight: 600;
-        line-height: 2.625rem;
-        letter-spacing: -0.01688rem;
-    }
+	h1 {
+		color: #030303;
+		font-size: 1.6875rem;
+		font-style: normal;
+		font-weight: 600;
+		line-height: 2.625rem;
+		letter-spacing: -0.01688rem;
+	}
 
-    h5 {
-        font-size: 1rem;
-        font-style: normal;
-        font-weight: 700;
-        line-height: 1.25rem;
-    }
+	h5 {
+		font-size: 1rem;
+		font-style: normal;
+		font-weight: 700;
+		line-height: 1.25rem;
+	} */
 }
 
+
 @layer components {
-    /* estilos para la tabla básica */
-    .table-primary {
-        @apply border-separate border-spacing-y-2
-    }
 
-    .table-primary tr,
-    th {
-        @apply p-4;
-    }
+	/* estilos para la tabla básica */
+	.table-primary {
+		@apply border-separate border-spacing-y-2;
+	}
 
-    .table-primary>tbody>tr,
-    td {
-        @apply p-4 bg-base-100;
-    }
-   
+	.table-primary tr,
+	th {
+		@apply p-4;
+	}
 
-    .table-primary>tbody>tr {
-        @apply p-4 hover:shadow-xl cursor-pointer;
-    }
+	.table-primary>tbody>tr,
+	td {
+		@apply p-4 bg-base-100;
+	}
 
-    .table-primary>tbody>tr td:first-child {
-        border-top-left-radius: 0.625rem;
-        border-bottom-left-radius: 0.625rem;
-    }
+	.table-primary>tbody>tr {
+		@apply p-4 cursor-pointer;
+	}
 
-    .table-primary>tbody>tr td:last-child {
-        border-top-right-radius: 0.625rem;
-        border-bottom-right-radius: 0.625rem;
-    }
+	.table-primary>tbody>tr td:first-child {
+		border-top-left-radius: 0.625rem;
+		border-bottom-left-radius: 0.625rem;
+	}
+
+	.table-primary>tbody>tr td:last-child {
+		border-top-right-radius: 0.625rem;
+		border-bottom-right-radius: 0.625rem;
+	}
+}
+
+.stwui-datepicker-input {
+	@apply  text-base-content placeholder:text-gray-400 dui-input dui-input-bordered dui-input-md placeholder:text-[1rem] text-[1rem]
+}
+
+.stwui-datepicker-label {
+	@apply text-base-content
 }

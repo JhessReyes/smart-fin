@@ -21,8 +21,9 @@
 	import { createQuery } from '@tanstack/svelte-query';
 	import { Select } from 'svelte-atoms';
 
-	export let value = '';
-	export let options = [];
+	export let value: any = '';
+	export let options: any = [];
+	export let props: object = { size: 'medium' };
 
 	const queryOptions = createQuery({
 		queryKey: ['optionCategories'],
@@ -53,6 +54,6 @@
 	bind:value
 	bind:options
 	placeholder="Agregar Categoria"
-	size="medium"
+	{...props}
 	isLoading={$queryOptions?.isLoading || $queryOptions?.isRefetching}
 />

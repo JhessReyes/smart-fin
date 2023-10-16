@@ -53,7 +53,7 @@
 	<div slot="actions" class="flex w-full justify-between">
 		<Search />
 		<Button
-			class="btn-primary btn-md"
+			class="dui-btn-primary dui-btn-md"
 			iconProps={{ name: 'add' }}
 			on:click={() => goto('transactions/create')}>Agregar Transaccion</Button
 		>
@@ -68,7 +68,7 @@
 	>
 		<div slot="head" let:header class="w-full flex items-center">
 			{#if header.key === 'select'}
-				<input type="checkbox" class="checkbox checkbox-primary" />
+				<!-- <input type="checkbox" class="dui-checkbox dui-checkbox-primary m-2" /> -->
 			{:else}
 				{header.label || ''}
 			{/if}
@@ -77,11 +77,20 @@
 			{#if key === 'actions'}
 				<Icon name="" className="text-yellow-500" />
 			{:else if key === 'select'}
-				<input type="checkbox" class="checkbox checkbox-primary" />
+				<!-- 				<input type="checkbox" class="dui-checkbox dui-checkbox-primary m-auto" /> -->
+			{:else if key === 'date'}
+				<span
+					>{new Date(row?.date).toLocaleDateString(undefined, {
+						weekday: 'long',
+						year: 'numeric',
+						month: 'long',
+						day: 'numeric'
+					})}</span
+				>
 			{:else if key === 'fixed'}
 				<Icon name="star" className="text-yellow-500" />
 			{:else if key === 'category'}
-				<div class="badge badge-lg p-6 px-8 w-52 bg-green-100/25 text-green-500 font-bold">
+				<div class="dui-badge dui-badge-lg p-6 px-8 w-52 bg-green-100/25 text-green-500">
 					{row?.category}
 				</div>
 			{:else}
