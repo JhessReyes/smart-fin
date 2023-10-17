@@ -67,3 +67,19 @@
 .stwui-datepicker-label {
 	@apply text-base-content
 }
+
+.stwui-menu{
+	@apply bg-base-100 
+}
+.stwui-tab{
+	@apply text-base-content 
+}
+.stwui-menu-group-item, .stwui-input-label, .stwui-input, .stwui-input-password-toggle-wrapper, .stwui-input-trailing-wrapper, .stwui-list, .stwui-list-item-content-description{
+	@apply bg-transparent text-base-content
+}
+.stwui-tabs-bar{
+	@apply bg-black
+}
+.stwui-list-item-leading{
+	@apply bg-base-300 text-base-content
+}

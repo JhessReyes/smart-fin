@@ -2,7 +2,7 @@
 	import { Button, Input } from '$lib/components/atoms/';
 	import { Toast } from '$lib/components/molecules';
 	import { AuthenticationService } from '$lib/services/auth';
-	import '../../../app.postcss';
+	import '../../../app.css';
 
 	let loading = false;
 	let emailAndPassword: { email: string; password: string } = { email: '', password: '' };
@@ -16,7 +16,7 @@
 	};
 </script>
 
-<div class="grid md:grid-cols-2 h-screen prose max-w-none bg-base-100">
+<div class="grid md:grid-cols-2 h-screen dui-prose prose max-w-none bg-base-100">
 	<Toast />
 	<div class="md:flex flex-col justify-between gap-5 drop-shadow-md font-bold text-6xl hidden">
 		<h1 class="text-5xl capitalize italic m-0 drop-shadow-sm px-12">
@@ -40,13 +40,13 @@
 		</p>
 		<div class="w-full max-w-sm">
 			<Button
-				class="btn-circle w-full justify-center text-center flex bg-transparent border border-secondary text-secondary hover:bg-accent hover:text-base-200 dark:text-white dark:hover:text-primary"
+				class="dui-btn-circle w-full justify-center text-center flex bg-transparent border border-secondary text-secondary hover:bg-accent hover:text-base-200 dark:text-white dark:hover:text-primary"
 			>
 				<img src="/google-color.svg" alt="Google SigIn" class="m-0" />
 				Continuar con Google
 			</Button>
 		</div>
-		<p class="divider">ó</p>
+		<p class="dui-divider">ó</p>
 		<div class="w-full max-w-sm">
 			<span class="label mb-1 p-0 text-sm">Correo electrónico</span>
 			<Input
@@ -65,7 +65,8 @@
 			/>
 		</div>
 		<Button
-			class="drop-shadow w-full max-w-sm btn-primary {loading && 'loading loading-bars !loading-xs btn-outline'}"
+			class="drop-shadow w-full max-w-sm dui-btn-primary {loading &&
+				'loading loading-bars !loading-xs dui-btn-outline'}"
 			on:click={handleAuth.emailAndPassword}
 		>
 			Entrar

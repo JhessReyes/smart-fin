@@ -3,6 +3,7 @@
 	import { Icon as MaterialIcon, Tooltip } from '../atoms';
 	import Icon from '@iconify/svelte';
 	import { appState } from '$lib/stores';
+	import { AvatarMenu } from '$lib/modules/user/components';
 
 	export let title: string = 'Inicio';
 	export let currentPage: string = '/';
@@ -137,9 +138,7 @@
 					$appState.collapsed ? 'flex-col' : 'flex-row justify-between dui-card px-6'
 				} gap-5`}
 			>
-				<div class="dui-avatar">
-					<div class="w-10 rounded-lg bg-base-200 text-center" />
-				</div>
+				<AvatarMenu />
 				{#if !$appState.collapsed}
 					<div in:slide={{ axis: 'x' }} class={`flex gap-5 flex-row`}>
 						<label class="dui-swap dui-swap-rotate">
