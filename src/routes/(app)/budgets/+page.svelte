@@ -81,7 +81,7 @@
 				<Button
 					class="dui-btn-primary dui-btn-md"
 					iconProps={{ name: 'add' }}
-					on:click={() => (open = true)}>Agregar Categoría</Button
+					on:click={() => (open = true)}>Agregar Presupuesto</Button
 				>
 			</div>
 			<div class="flex md:flex-row flex-col items-center h-full gap-8">

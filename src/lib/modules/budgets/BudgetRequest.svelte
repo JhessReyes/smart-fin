@@ -106,7 +106,7 @@
 			<DatePicker
 				name="date"
 				showTime
-				format="MMMM D, YYYY - h:mm A"
+				format="MMMM D YYYY H:mm"
 				placeholder={'Inicio del presupuesto'}
 				bind:value={budget.start}
 			>
@@ -116,7 +116,7 @@
 			<DatePicker
 				name="date"
 				showTime
-				format="MMMM D, YYYY - H:mm"
+				format="MMMM D YYYY H:mm"
 				placeholder={'Inicio del presupuesto'}
 				bind:value={budget.end}
 			>

@@ -66,7 +66,7 @@
 		</div>
 		<Button
 			class="drop-shadow w-full max-w-sm dui-btn-primary {loading &&
-				'loading loading-bars !loading-xs dui-btn-outline'}"
+				'dui-loading dui-loading-bars !dui-loading-xs dui-btn-outline'}"
 			on:click={handleAuth.emailAndPassword}
 		>
 			Entrar

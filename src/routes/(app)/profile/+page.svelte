@@ -1,5 +1,5 @@
 <script lang="ts">
-	import { Avatar } from '$lib/components/atoms';
+	import { Avatar, Button } from '$lib/components/atoms';
 	import { Email, Rename } from '$lib/components/icons';
 	import { appState } from '$lib/stores';
 	import Icon from '@iconify/svelte';
@@ -68,66 +68,71 @@
 				</Tabs.Tab>
 			{/each}
 		</Tabs>
-
-		{#if currentTab == '#account'}
-			<h2>Datos Generales</h2>
-			<div class="grid grid-cols-2 gap-4">
-				<Input name="input">
-					<Input.Label slot="label">Nombre</Input.Label>
-					<Input.Leading slot="leading" data={Rename} color="hsl(var(--bc))" />
-				</Input>
-				<Input name="input">
-					<Input.Label slot="label">Email</Input.Label>
-					<Input.Leading slot="leading" data={Email} color="hsl(var(--bc))" />
-				</Input>
-				<Input name="input">
-					<Input.Label slot="label">Moneda</Input.Label>
-					<!-- <Input.Leading slot="leading" data={Rename} color="hsl(var(--bc))" /> -->
-				</Input>
-				<Input name="input">
-					<Input.Label slot="label">Pais</Input.Label>
-					<!-- <Input.Leading slot="leading" data={Email} color="hsl(var(--bc))" /> -->
-				</Input>
-			</div>
-
-			<h2>Contraseña</h2>
-			<div class="grid grid-cols-2 gap-4">
-				<Input type="password" name="input" showPasswordToggle>
-					<Input.Label slot="label">Contraseña Actual</Input.Label>
-					<!-- <Input.Leading slot="leading" color="hsl(var(--bc))" /> -->
-				</Input>
-				<Input type="password" name="input" showPasswordToggle>
-					<Input.Label slot="label">Nueva Contraseña</Input.Label>
-					<!-- <Input.Leading slot="leading" color="hsl(var(--bc))" /> -->
-				</Input>
-				<Input type="password" name="input" showPasswordToggle>
-					<Input.Label slot="label">Confirmar Contraseña</Input.Label>
-					<!-- <Input.Leading slot="leading" data={Rename} color="hsl(var(--bc))" /> -->
-				</Input>
-			</div>
-
-			<h2>Sesiones</h2>
-			<List>
-				{#each items as item}
-					<List.Item>
-						<List.Item.Leading slot="leading">
-							<List.Item.Leading.Icon slot="icon" data={Email} />
-						</List.Item.Leading>
-						<List.Item.Content slot="content">
-							<List.Item.Content.Title slot="title">{item.title}</List.Item.Content.Title>
-							<List.Item.Content.Description slot="description">
-								{item.description}
-							</List.Item.Content.Description>
-						</List.Item.Content>
-						<List.Item.Extra slot="extra" placement="start">
-							<Icon
-								icon="line-md:close-small"
-								class="cursor-pointer rounded-full p-1 shadow-sm shadow-secondary w-6 h-6"
-							/>
-						</List.Item.Extra>
-					</List.Item>
-				{/each}
-			</List>
-		{/if}
+		<div class="overflow-auto flex flex-col gap-2">
+			{#if currentTab == '#account'}
+				<h2>Datos Generales</h2>
+				<div class="grid grid-cols-2 gap-4">
+					<Input name="input">
+						<Input.Label slot="label">Nombre</Input.Label>
+						<Input.Leading slot="leading" data={Rename} color="hsl(var(--bc))" />
+					</Input>
+					<Input name="input">
+						<Input.Label slot="label">Email</Input.Label>
+						<Input.Leading slot="leading" data={Email} color="hsl(var(--bc))" />
+					</Input>
+					<Input name="input">
+						<Input.Label slot="label">Moneda</Input.Label>
+						<!-- <Input.Leading slot="leading" data={Rename} color="hsl(var(--bc))" /> -->
+					</Input>
+					<Input name="input" disabled>
+						<Input.Label slot="label">Pais</Input.Label>
+						<!-- <Input.Leading slot="leading" data={Email} color="hsl(var(--bc))" /> -->
+					</Input>
+				</div>
+				<Button type="button" class="dui-btn dui-btn-secondary w-fit" disabled
+					>Actualizar Información</Button
+				>
+				<h2>Contraseña</h2>
+				<div class="grid grid-cols-2 gap-4">
+					<Input type="password" name="input" showPasswordToggle>
+						<Input.Label slot="label">Contraseña Actual</Input.Label>
+						<!-- <Input.Leading slot="leading" color="hsl(var(--bc))" /> -->
+					</Input>
+					<Input type="password" name="input" showPasswordToggle>
+						<Input.Label slot="label">Nueva Contraseña</Input.Label>
+						<!-- <Input.Leading slot="leading" color="hsl(var(--bc))" /> -->
+					</Input>
+					<Input type="password" name="input" showPasswordToggle>
+						<Input.Label slot="label">Confirmar Contraseña</Input.Label>
+						<!-- <Input.Leading slot="leading" data={Rename} color="hsl(var(--bc))" /> -->
+					</Input>
+				</div>
+				<Button type="button" class="dui-btn dui-btn-secondary w-fit" disabled
+					>Actualizar Contraseña</Button
+				>
+				<h2>Sesiones</h2>
+				<List>
+					{#each items as item}
+						<List.Item>
+							<List.Item.Leading slot="leading">
+								<List.Item.Leading.Icon slot="icon" data={Email} />
+							</List.Item.Leading>
+							<List.Item.Content slot="content">
+								<List.Item.Content.Title slot="title">{item.title}</List.Item.Content.Title>
+								<List.Item.Content.Description slot="description">
+									{item.description}
+								</List.Item.Content.Description>
+							</List.Item.Content>
+							<List.Item.Extra slot="extra" placement="start">
+								<Icon
+									icon="line-md:close-small"
+									class="cursor-pointer rounded-full p-1 shadow-sm shadow-secondary w-6 h-6"
+								/>
+							</List.Item.Extra>
+						</List.Item>
+					{/each}
+				</List>
+			{/if}
+		</div>
 	</div>
 </div>
