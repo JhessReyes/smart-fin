@@ -1,4 +1,4 @@
-export let currency = [
+export let CURRENCIES = [
     {
         "country": "Albania",
         "currency": "Lek",

@@ -1,9 +1,12 @@
 <script lang="ts">
 	import { fade, fly, slide } from 'svelte/transition';
-	import { Icon as MaterialIcon, Tooltip } from '../atoms';
+	import { Avatar, Icon as MaterialIcon, Tooltip } from '../atoms';
 	import Icon from '@iconify/svelte';
-	import { appState } from '$lib/stores';
+	import { accessTokenStore, appState } from '$lib/stores';
 	import { AvatarMenu } from '$lib/modules/user/components';
+	import { FirebaseAuthenticationService } from '$lib/services/auth';
+	import { goto } from '$app/navigation';
+	import { AccessToken } from '$lib/schemas';
 
 	export let title: string = 'Inicio';
 	export let currentPage: string = '/';
@@ -34,6 +37,13 @@
 		]
 	];
 
+	const firebaseAuthService = new FirebaseAuthenticationService();
+	const handleOut = async () => {
+		await firebaseAuthService.logOut().then((a) => {
+			accessTokenStore.set(new AccessToken());
+			goto('/login');
+		});
+	};
 	const toggleTheme = (arg: string) => {
 		typeof document != 'undefined' && document?.body?.setAttribute('data-theme', arg);
 	};
@@ -138,7 +148,7 @@
 					$appState.collapsed ? 'flex-col' : 'flex-row justify-between dui-card px-6'
 				} gap-5`}
 			>
-				<AvatarMenu />
+				<AvatarMenu avatarProps={{ image: $appState?.user?.photoURL }} />
 				{#if !$appState.collapsed}
 					<div in:slide={{ axis: 'x' }} class={`flex gap-5 flex-row`}>
 						<label class="dui-swap dui-swap-rotate">
@@ -150,7 +160,14 @@
 							<Icon icon="line-md:sun-rising-loop" class="dui-swap-off h-7 w-7" />
 							<Icon icon="line-md:moon-rising-alt-loop" class="dui-swap-on h-7 w-7" />
 						</label>
-						<MaterialIcon name="logout" className="text-2xl" />
+						<!-- svelte-ignore a11y-no-static-element-interactions -->
+						<!-- svelte-ignore a11y-click-events-have-key-events -->
+						<div on:click={handleOut}>
+							<Icon
+								icon="line-md:log-out"
+								class="h-7 w-6 m-auto cursor-pointer hover:text-danger"
+							/>
+						</div>
 					</div>
 				{:else}
 					<div in:slide={{ axis: 'x', delay: 200 }} class={`flex gap-5 flex-col`}>
@@ -163,7 +180,14 @@
 							<Icon icon="line-md:sun-rising-loop" class="dui-swap-off h-7 w-7" />
 							<Icon icon="line-md:moon-rising-alt-loop" class="dui-swap-on h-7 w-7" />
 						</label>
-						<MaterialIcon name="logout" className="text-2xl" />
+						<!-- svelte-ignore a11y-no-static-element-interactions -->
+						<!-- svelte-ignore a11y-click-events-have-key-events -->
+						<div on:click={handleOut}>
+							<Icon
+								icon="line-md:log-out"
+								class="h-7 w-6 m-auto cursor-pointer hover:text-danger"
+							/>
+						</div>
 					</div>
 				{/if}
 			</div>

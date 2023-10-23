@@ -5,14 +5,14 @@ import { writable } from "svelte/store";
 import { v4 as uuidv4 } from 'uuid';
 
 //@ts-ignore
-const initialAppStateValue = browser ? new AppState(JSON.parse(window.sessionStorage.getItem("appState")) ?? new AppState()) : new AppState();
+const initialAppStateValue = browser ? new AppState(JSON.parse(window.localStorage.getItem("sf-state")) ?? new AppState()) : new AppState();
 
 export let appState = writable(initialAppStateValue)
 
 appState.subscribe((value) => {
     if (browser) {
-        window.sessionStorage.setItem(
-            "appState",
+        window.localStorage.setItem(
+            "sf-state",
             JSON.stringify(value)
         );
     }

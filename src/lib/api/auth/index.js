@@ -15,3 +15,10 @@ export const VERIFY_ME = `query Me {
       name
     }
   }`
+
+export const CREATE_USER_WITH_EMAIL_AND_PASSWORD = `mutation CreateUser($input: CreateUserInput!) {
+    createUser(input: $input) {
+      id
+      name
+    }
+  }`

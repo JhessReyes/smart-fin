@@ -1,6 +1,8 @@
-import type { ICategory } from "$lib/interfaces";
+import type { ICategory, IUser } from "$lib/interfaces";
 
 export class AppState {
+    token: string;
+    user: IUser | object;
     title: string;
     icon: string;
     subtitle: string;
@@ -15,6 +17,8 @@ export class AppState {
     settings: { modules: {}; };
 
     constructor({
+        token = '',
+        user = {},
         title = 'Inicio',
         icon = 'home',
         subtitle = '',
@@ -32,6 +36,8 @@ export class AppState {
             modules: {}
         }
     } = {}) {
+        this.token = token
+        this.user = user
         this.title = title
         this.icon = icon
         this.subtitle = subtitle

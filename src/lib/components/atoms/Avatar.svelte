@@ -21,7 +21,7 @@
 {#if !imageError && image}
 	<div class={`dui-avatar ${type}`}>
 		<div class={`w-10 ${className}`}>
-			<img src={image} on:error={(e) => (imageError = true)} alt={name} />
+			<img src={image} on:error={(e) => (imageError = true)} alt={name} class="m-0" />
 		</div>
 	</div>
 {:else}
