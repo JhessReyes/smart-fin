@@ -2,7 +2,7 @@ import type { ICategory, IUser } from "$lib/interfaces";
 
 export class AppState {
     token: string;
-    user: IUser | object;
+    user: IUser | object | any;
     title: string;
     icon: string;
     subtitle: string;

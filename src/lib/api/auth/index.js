@@ -22,3 +22,33 @@ export const CREATE_USER_WITH_EMAIL_AND_PASSWORD = `mutation CreateUser($input: 
       name
     }
   }`
+
+export const ME = `
+query Me {
+  me {
+    id
+    name
+    plan {
+      id
+      name
+      price
+    }
+    email
+    currency
+    sessions {
+      id
+      status
+      type
+      auth
+    }
+    categories {
+      id
+    }
+    budgets {
+      id
+    }
+    transactions {
+      id
+    }
+  }
+}`

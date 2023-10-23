@@ -1,14 +1,19 @@
 <script lang="ts">
+	import { ME } from '$lib/api/auth';
 	import { app } from '$lib/api/firebase';
+	import { UPDATE_USER } from '$lib/api/me';
+	import { mutationFetch, queryFetch } from '$lib/client';
 	import { Avatar, Button } from '$lib/components/atoms';
 	import { Email, Rename } from '$lib/components/icons';
 	import { addToast, appState } from '$lib/stores';
 	import Icon from '@iconify/svelte';
+	import { createMutation, createQuery, useQueryClient } from '@tanstack/svelte-query';
 	import {
 		EmailAuthProvider,
 		getAuth,
 		reauthenticateWithCredential,
-		updatePassword
+		updatePassword,
+		updateProfile
 	} from 'firebase/auth';
 	import { Input, List, Tabs } from 'stwui';
 
@@ -19,8 +24,10 @@
 		title: string;
 	}
 
+	let me: any = undefined;
 	let password: any = { oldPassword: null, newPassword: null, verifyPassword: null };
 	let passwordDisabled: boolean = true;
+	const queryClient = useQueryClient();
 	const tabs: Tab[] = [
 		{
 			href: '#account',
@@ -58,6 +65,7 @@
 				addToast('Fail!', 'No se ha podido obtener las credenciales', 'error');
 			}
 		});
+		//@ts-ignore
 		await updatePassword(result?.user, password.newPassword)
 			.then((res) => {
 				addToast('Success!', `Se ha actualizado la contraseña correctamente`, 'success');
@@ -73,6 +81,53 @@
 			});
 	};
 
+	const updateInfo = () => {
+		//@ts-ignore
+		$mutationMe.mutate({ id: me?.id, name: me?.name });
+	};
+
+	const queryMe = createQuery({
+		queryKey: ['me'],
+		queryFn: async () => {
+			return queryFetch({
+				query: ME
+			})();
+		},
+		refetchOnMount: 'always',
+		onSuccess: async (res) => {
+			if (res?.errors || !res?.data) {
+				addToast('Fail!', 'Ocurrió un error al obtener las transacciones', 'error');
+			} else me = await res?.data?.me;
+		}
+	});
+
+	const mutationMe = createMutation({
+		mutationKey: ['updateMe'],
+		mutationFn: async (data: any) => {
+			const auth = getAuth(app);
+			await updateProfile(auth.currentUser, {
+				displayName: data?.name
+			}).then((res) => {
+				console.log('aaaaaa', res);
+			});
+
+			return await mutationFetch({
+				query: UPDATE_USER,
+				variables: {
+					input: data
+				}
+			});
+		},
+		onSuccess: async (response) => {
+			if (response?.errors || !response?.data) {
+				addToast('Fail!', 'Ocurrió un error al actualizar la información', 'error');
+			} else {
+				addToast('Success!', `Se ha enviado actualizado la información correctamente`, 'success');
+			}
+			await queryClient.invalidateQueries(['me']);
+		}
+	});
+
 	$: password.newPassword == password.verifyPassword
 		? password.newPassword?.length > 5
 			? (passwordDisabled = false)
@@ -85,7 +140,7 @@
 		<div class="flex flex-col items-center gap-4">
 			<div class="flex flex-col items-center">
 				<Avatar class="rounded-full w-32 text-4xl" image={$appState.user?.photoURL} />
-				<h2>{$appState.user?.displayName}</h2>
+				<h2>{me?.name || $appState.user?.displayName}</h2>
 				<div class="flex gap-2 items-center justify-center">
 					<Icon icon="line-md:email" />
 					<h5 class="text-sm m-0 p-0">{$appState.user?.email}</h5>
@@ -100,15 +155,21 @@
 			<ul class="flex flex-col gap-4">
 				<li class="flex flex-row items-center gap-8 justify-between">
 					<h4 class="m-0">Transacciones realizadas</h4>
-					<span class="dui-badge dui-badge-info dui-badge-outline m-0 h-fit">4</span>
+					<span class="dui-badge dui-badge-info dui-badge-outline m-0 h-fit"
+						>{me?.transactions?.length}</span
+					>
 				</li>
 				<li class="flex flex-row items-center gap-8 justify-between">
 					<h4 class="m-0">Presupuestos cumplidos</h4>
-					<span class="dui-badge dui-badge-warning dui-badge-outline m-0 h-fit">4</span>
+					<span class="dui-badge dui-badge-warning dui-badge-outline m-0 h-fit"
+						>{me?.budgets?.length}</span
+					>
 				</li>
 				<li class="flex flex-row items-center gap-8 justify-between">
 					<h4 class="m-0">Categorias creadas</h4>
-					<span class="dui-badge dui-badge-success dui-badge-outline m-0 h-fit">4</span>
+					<span class="dui-badge dui-badge-success dui-badge-outline m-0 h-fit"
+						>{me?.categories?.length}</span
+					>
 				</li>
 			</ul>
 		</div>
@@ -122,39 +183,31 @@
 				</Tabs.Tab>
 			{/each}
 		</Tabs>
-		<div class="overflow-auto flex flex-col gap-2">
-			{#if currentTab == '#account'}
+		<div class="overflow-auto flex flex-col gap-4">
+			{#if $queryMe.isLoading || $queryMe.isRefetching}
+				cargando...
+			{:else if currentTab == '#account'}
 				<h2>Datos Generales</h2>
 				<div class="grid grid-cols-2 gap-4">
-					<Input name="input">
+					<Input name="input" bind:value={me.name}>
 						<Input.Label slot="label">Nombre</Input.Label>
 						<Input.Leading slot="leading" data={Rename} color="hsl(var(--bc))" />
 					</Input>
-					<!-- <Input name="input">
-						<Input.Label slot="label">Email</Input.Label>
-						<Input.Leading slot="leading" data={Email} color="hsl(var(--bc))" />
-					</Input> -->
-					<Input name="input" disabled>
+					<Input name="input" disabled bind:value={me.currency}>
 						<Input.Label slot="label">Moneda</Input.Label>
-						<!-- <Input.Leading slot="leading" data={Rename} color="hsl(var(--bc))" /> -->
 					</Input>
-					<!-- 					<Input name="input" disabled>
-						<Input.Label slot="label">Pais</Input.Label>
-					</Input> -->
 				</div>
 
-				<Button type="button" class="dui-btn dui-btn-secondary w-fit" disabled
-					>Actualizar Información</Button
-				>
+				<Button type="button" class="dui-btn dui-btn-secondary w-fit" on:click={updateInfo}>
+					Actualizar Información
+				</Button>
 				<h2>Contraseña</h2>
 				<div class="grid grid-cols-2 gap-4">
 					<Input type="password" name="input" showPasswordToggle bind:value={password.oldPassword}>
 						<Input.Label slot="label">Contraseña Actual</Input.Label>
-						<!-- <Input.Leading slot="leading" color="hsl(var(--bc))" /> -->
 					</Input>
 					<Input type="password" name="input" showPasswordToggle bind:value={password.newPassword}>
 						<Input.Label slot="label">Nueva Contraseña</Input.Label>
-						<!-- <Input.Leading slot="leading" color="hsl(var(--bc))" /> -->
 					</Input>
 					<Input
 						type="password"
@@ -163,7 +216,6 @@
 						bind:value={password.verifyPassword}
 					>
 						<Input.Label slot="label">Confirmar Contraseña</Input.Label>
-						<!-- <Input.Leading slot="leading" data={Rename} color="hsl(var(--bc))" /> -->
 					</Input>
 				</div>
 				{#if password.newPassword && password.verifyPassword}
@@ -194,9 +246,9 @@
 				>
 					Actualizar Contraseña
 				</Button>
-				<h2>Sesiones</h2>
+				<!-- <h2>Sesiones</h2>
 				<List>
-					{#each items as item}
+					{#each me?.sessions as item}
 						<List.Item>
 							<List.Item.Leading slot="leading">
 								<List.Item.Leading.Icon slot="icon" data={Email} />
@@ -215,7 +267,7 @@
 							</List.Item.Extra>
 						</List.Item>
 					{/each}
-				</List>
+				</List> -->
 			{/if}
 		</div>
 	</div>
