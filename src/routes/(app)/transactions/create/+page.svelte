@@ -3,7 +3,7 @@
 	import DropZone from '$lib/components/atoms/DropZone.svelte';
 	// @ts-ignore
 	import { Calendar, Image, Upload } from '$lib/components/icons';
-	import { appState } from '$lib/stores';
+	import { addToast, appState } from '$lib/stores';
 	import { createMutation } from '@tanstack/svelte-query';
 	import { mutationFetch } from '$lib/client';
 	import { ADDTRANSACTION } from '$lib/api/transactions';
@@ -12,6 +12,7 @@
 
 	let request = 'ADD';
 	let transaction = {};
+	const handleSubmit = () => $mutationTransaction.mutate(transaction);
 	const mutationTransaction = createMutation({
 		mutationKey: request == 'ADD' ? ['addTransaction'] : ['updateTransaction'],
 		/**
@@ -28,29 +29,22 @@
 			});
 		},
 		onSuccess: async (response) => {
-			console.log(response);
-			history.back();
-			/* if (response?.errors || !response?.data) {
-				addNotification({
-					text: `Oops, ha ocurrido un error al ${
-						request == 'ADD' ? 'crear' : 'actualizar'
-					} la alerta ${alert?.name}`,
-					position: 'bottom-right',
-					type: 'error',
-					removeAfter: 5000
-				});
+			if (response?.errors || !response?.data) {
+				addToast(
+					'Fail!',
+					`Oops, ha ocurrido un error al ${
+						transaction?.id ? 'actualizar' : 'crear'
+					} la transacción`,
+					'error'
+				);
 			} else {
-				addNotification({
-					text: `Se ha ${request == 'ADD' ? 'creado' : 'actualizado'} correctamente la alerta ${
-						alert?.name
-					}`,
-					position: 'bottom-right',
-					type: 'success',
-					removeAfter: 10000
-				});
+				addToast(
+					'Success!',
+					`Se ha ${transaction?.id ? 'actualizado' : 'creado'} correctamente la transacción`,
+					'success'
+				);
 				history.back();
 			}
-			await queryClient.invalidateQueries(); */
 		}
 	});
 
@@ -58,55 +52,54 @@
 </script>
 
 <div class="flex justify-between top-0 gap-10 h-full w-full overflow-y-auto py-2">
-	<form
-		class="dui-card shadow-md w-full h-full m-auto bg-base-100 overflow-y-auto"
-		on:submit={(e) => {
-			e.preventDefault();
-			e.stopPropagation();
-			$mutationTransaction.mutate(transaction);
-		}}
+	<form id="transaction" on:submit|preventDefault|stopPropagation={handleSubmit} />
+	<div
+		class="dui-card shadow-md w-full m-auto bg-base-100 overflow-y-auto flex flex-col justify-between h-full p-12 overflow-auto"
 	>
-		<div class="flex flex-col justify-between h-full p-12 overflow-auto">
-			<div class="flex flex-col gap-4 w-full">
-				<SelectCategories bind:value={transaction.categoryId} />
-				<Input
-					placeholder="Monto de la Transacción"
-					props={{ type: 'number' }}
-					required
-					bind:value={transaction.amount}
-				/>
-				<textarea
-					placeholder="Agregar Descripción"
-					required
-					class="dui-textarea dui-textarea-bordered dui-textarea-md h-32"
-					bind:value={transaction.description}
-				/>
-				<div class="flex justify-between">
-					<span class="font-semibold"> Mes en curso </span>
-					<div class="flex items-center gap-2">
-						<span class="font-light text-sm">Agregar al mes en curso</span>
-						<Toggle />
-					</div>
-				</div>
-
-				<div>
-					<label for="date" class="text-sm font-medium">Fecha de la transaccion</label>
-					<DatePicker
-						name="date"
-						showTime
-						format="MMMM D, YYYY - h:mm A"
-						placeholder={'Fecha de la transacción'}
-					>
-						<DatePicker.Trailing slot="trailing" data={Calendar} />
-					</DatePicker>
+		<div class="flex flex-col gap-4 w-full">
+			<SelectCategories bind:value={transaction.categoryId} />
+			<Input
+				form="transaction"
+				placeholder="Monto de la Transacción"
+				props={{ type: 'number' }}
+				required
+				bind:value={transaction.amount}
+			/>
+			<textarea
+				form="transaction"
+				placeholder="Agregar Descripción"
+				required
+				class="dui-textarea dui-textarea-bordered dui-textarea-md h-32"
+				bind:value={transaction.description}
+			/>
+			<div class="flex justify-between">
+				<span class="font-semibold"> Mes en curso </span>
+				<div class="flex items-center gap-2">
+					<span class="font-light text-sm">Agregar al mes en curso</span>
+					<Toggle />
 				</div>
 			</div>
-			<div class="dui-modal-action">
-				<Button on:click={() => history.back()}>Cacelar</Button>
-				<Button type="submit" class="dui-btn-secondary normal-case">Aceptar</Button>
+
+			<div>
+				<label for="date" class="text-sm font-medium">Fecha de la transaccion</label>
+				<DatePicker
+					name="date"
+					showTime
+					format="MMMM D, YYYY - h:mm A"
+					placeholder={'Fecha de la transacción'}
+				>
+					<DatePicker.Trailing slot="trailing" data={Calendar} />
+				</DatePicker>
 			</div>
 		</div>
-	</form>
+		<div class="dui-modal-action">
+			<Button on:click={() => history.back()}>Cacelar</Button>
+			<Button form="transaction" type="submit" class="dui-btn-secondary normal-case">
+				Aceptar
+			</Button>
+		</div>
+	</div>
+
 	<section
 		role="complementary"
 		class="dui-card shadow-md w-full h-full m-auto p-12 bg-base-100 overflow-y-auto"

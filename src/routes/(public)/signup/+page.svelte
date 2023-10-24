@@ -40,7 +40,7 @@
 	</p>
 
 	<form
-		on:submit|preventDefault={handleSignUp.emailAndPassword}
+		on:submit|preventDefault|stopPropagation={handleSignUp.emailAndPassword}
 		id="signup"
 		class="w-full max-w-sm flex flex-col gap-4"
 	>

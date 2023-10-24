@@ -64,8 +64,11 @@
 	@apply  text-base-content placeholder:text-gray-400 dui-input dui-input-bordered dui-input-md placeholder:text-[1rem] text-[1rem]
 }
 
-.stwui-datepicker-label {
+/* .stwui-datepicker-label {
 	@apply text-base-content
+} */
+.stwui-datepicker-error {
+	@apply !text-error placeholder:!text-error
 }
 
 .stwui-menu{
