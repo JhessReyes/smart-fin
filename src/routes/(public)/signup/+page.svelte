@@ -41,6 +41,7 @@
 
 	<form
 		on:submit|preventDefault={handleSignUp.emailAndPassword}
+		id="signup"
 		class="w-full max-w-sm flex flex-col gap-4"
 	>
 		<div class="w-full max-w-sm flex flex-col gap-4">
@@ -82,6 +83,7 @@
 		<div class="w-auto px-4 flex gap-4 not-prose">
 			{#each plans as plan}
 				<button
+					type="button"
 					class="dui-card shadow-lg w-full p-4 {extrasRequired.planId === plan?.id
 						? 'bg-primary text-white'
 						: 'bg-base-200 text-primary'}"
@@ -97,15 +99,15 @@
 				</button>
 			{/each}
 		</div>
-
-		<Button
-			class="drop-shadow w-full max-w-sm dui-btn-primary text-white {loading &&
-				'dui-loading dui-loading-bars !dui-loading-xs dui-btn-outline'}"
-			type="submit"
-		>
-			Crear cuenta
-		</Button>
 	</form>
+	<Button
+		class="drop-shadow w-full max-w-sm dui-btn-primary text-white {loading &&
+			'dui-loading dui-loading-bars !dui-loading-xs dui-btn-outline'}"
+		type="submit"
+		form="signup"
+	>
+		Crear cuenta
+	</Button>
 	<div class="text-base">
 		¿Ya tienes una cuenta?
 		<a class="text-primary cursor-pointer" href="./login"> Ingresa aquí</a>
