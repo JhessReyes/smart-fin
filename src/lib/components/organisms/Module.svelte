@@ -20,6 +20,9 @@
 			</div>
 		{/if}
 	{:else}
+		{#if $$slots.actions}
+			<slot name="actions" />
+		{/if}
 		<slot />
 	{/if}
 </div>

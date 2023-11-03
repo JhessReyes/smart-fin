@@ -1,0 +1,11 @@
+:root {
+    --palette-white: hsl(var(--b));
+    --palette-main-1: hsl(var(--pc));
+    --palette-main-2: hsl(var(--b2));
+    /* 
+    --palette-noactive-1: hsl(var(--b));
+    --palette-noactive-3: hsl(var(--b));
+    --palette-noactive-4: hsl(var(--b));
+    --palette-noactive-5: hsl(var(--b));
+    --palette-noactive-6: hsl(var(--b)); */
+}
