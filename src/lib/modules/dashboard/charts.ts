@@ -209,7 +209,7 @@ export function incomeExpensesChart(transactions: any, opt?: any) {
             },
         });
         seriesList.push({
-            type: "bar",
+            type: type === 'SALDO' ? "line" : "bar",
             datasetId: datasetId,
             name: type,
             /*       endLabel: {
