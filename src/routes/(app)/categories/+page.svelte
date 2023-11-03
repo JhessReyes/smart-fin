@@ -25,6 +25,7 @@
 	import { Button, Drawer, Icon } from '$lib/components/atoms';
 	import { Card, Search } from '$lib/components/molecules';
 	import { Module } from '$lib/components/organisms';
+	import { filterByValue } from '$lib/helpers';
 	import { CategoryRequest } from '$lib/modules/categories';
 	import { Category } from '$lib/schemas';
 	import { addToast, appState } from '$lib/stores';
@@ -34,6 +35,7 @@
 	let categories: { defaults: any[]; rows: any[] };
 	let selected = null;
 	let open = false;
+	let value: string;
 	const queryClient = useQueryClient();
 	const queryCategories = createQuery({
 		queryKey: ['categories'],
@@ -90,7 +92,7 @@
 	<Module loading={$queryCategories?.isLoading || $queryCategories?.isRefetching}>
 		<div class="flex flex-col gap-10">
 			<div class="flex justify-between">
-				<Search />
+				<Search bind:value />
 				<Button
 					class="dui-btn-primary dui-btn-md"
 					iconProps={{ name: 'add' }}
@@ -101,7 +103,7 @@
 				<h2 class="m-0">Categorías Predeterminadas</h2>
 				<h6>Estas categorias estan hechas para que empieces con el control de tus finanzas</h6>
 				<div class="grid grid-cols-4 gap-4 py-4">
-					{#each categories?.defaults as category}
+					{#each filterByValue(categories?.defaults?.length > 0 ? categories?.defaults : [{}], value) as category}
 						<Card title={category?.name} />
 					{/each}
 				</div>
@@ -110,7 +112,7 @@
 				<h2>Tus Categorías</h2>
 				<h6>Todas tus categorías en un solo lugar</h6>
 				<div class="grid grid-cols-4 gap-4 py-4">
-					{#each categories?.rows as category}
+					{#each filterByValue(categories?.rows?.length > 0 ? categories?.rows : [{}], value) as category}
 						<Card title={category?.name} class="cursor-pointer">
 							<div class="dui-modal-action">
 								<Icon

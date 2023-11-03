@@ -5,6 +5,7 @@
 	import { Button, Icon } from '$lib/components/atoms';
 	import { Search } from '$lib/components/molecules';
 	import { Module, Table } from '$lib/components/organisms';
+	import { filterByValue } from '$lib/helpers';
 	import { addToast, appState } from '$lib/stores';
 	import type { TableHead } from '$lib/types';
 	import { createQuery } from '@tanstack/svelte-query';
@@ -19,6 +20,7 @@
 		{ key: 'actions', label: '' }
 	];
 
+	let value: string;
 	let rows: any[] = [];
 
 	const queryTransactions = createQuery({
@@ -50,7 +52,7 @@
 
 <Module loading={$queryTransactions?.isLoading || $queryTransactions?.isRefetching}>
 	<div slot="actions" class="flex w-full justify-between">
-		<Search />
+		<Search bind:value />
 		<Button
 			class="dui-btn-primary dui-btn-md"
 			iconProps={{ name: 'add' }}
@@ -60,7 +62,7 @@
 	<Table
 		className="table-primary"
 		{headers}
-		{rows}
+		rows={filterByValue(rows?.length > 0 ? rows : [{}], value)}
 		on:sort={(event) => console.log(event)}
 		pageSize={10}
 		showPagination

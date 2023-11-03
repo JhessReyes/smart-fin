@@ -18,30 +18,33 @@
     }
   }
 }`;
+	const DELETE_BUDGET = `mutation DeleteBudget($budgetId: ID!) {
+  deleteBudget(budgetId: $budgetId) {
+    name
+    id
+  }
+}`;
 </script>
 
-<script>
-	import { queryFetch } from '$lib/client';
+<script lang="ts">
+	import { mutationFetch, queryFetch } from '$lib/client';
 	import { Button, Drawer, Icon } from '$lib/components/atoms';
-	import { Calendar } from '$lib/components/icons';
 	import { Card, Search } from '$lib/components/molecules';
 	import { Module } from '$lib/components/organisms';
+	import { filterByValue } from '$lib/helpers';
 	import BudgetRequest from '$lib/modules/budgets/BudgetRequest.svelte';
 	import { BudgetCard } from '$lib/modules/budgets/components';
 	import { Budget } from '$lib/schemas';
 	import { addToast, appState } from '$lib/stores';
-	import { createQuery, useQueryClient } from '@tanstack/svelte-query';
-	import { DatePicker } from 'stwui';
+	import { createMutation, createQuery, useQueryClient } from '@tanstack/svelte-query';
 	import { slide } from 'svelte/transition';
 	$appState.title = 'Presupuestos';
 
-	let month = new Date().toLocaleDateString(undefined, {
-		month: 'long'
-	});
-	let budgets;
-	let selected = null;
-	let categories = undefined;
-	let open = false;
+	let budgets: any[];
+	let value: string;
+	let selected: any = null;
+	let categories: any = undefined;
+	let open: boolean = false;
 
 	const queryClient = useQueryClient();
 	const queryBudgets = createQuery({
@@ -68,6 +71,30 @@
 		}
 	});
 
+	const deleteBudget = createMutation({
+		mutationKey: ['deleteBudget'],
+		/**
+		 * @param {any} data
+		 */
+		mutationFn: async (data: any) => {
+			return await mutationFetch({
+				query: DELETE_BUDGET,
+				variables: {
+					budgetId: data?.id
+				}
+			});
+		},
+		onSuccess: async (response) => {
+			console.log(response);
+			if (response?.errors || !response?.data) {
+				addToast('Fail!', `Oops, ha ocurrido un error al eliminar el presupuesto`, 'error');
+			} else {
+				addToast('Success!', `Se ha eliminado correctamente el presupuesto`, 'success');
+				await queryClient.invalidateQueries();
+			}
+		}
+	});
+
 	$: if (!open) {
 		selected = false;
 	}
@@ -77,7 +104,7 @@
 	<Module loading={$queryBudgets.isLoading || $queryBudgets.isRefetching}>
 		<div class="flex flex-col gap-10">
 			<div class="flex justify-between">
-				<Search />
+				<Search bind:value />
 				<Button
 					class="dui-btn-primary dui-btn-md"
 					iconProps={{ name: 'add' }}
@@ -92,7 +119,7 @@
 						<span>Numero de transacciones: </span>
 						<span>Valor: Q. 500.00</span>
 					</span> -->
-					{#each budgets as budget}
+					{#each filterByValue(budgets?.length > 0 ? budgets : [{}], value) as budget}
 						<BudgetCard
 							class="cursor-pointer"
 							title={budget.name}
@@ -113,7 +140,7 @@
 									name="delete"
 									className="rounded-full dui-btn dui-btn-outline dui-btn-error w-12 h-12 flex items-center justify-center"
 									on:click={() => {
-										// $deleteCategory.mutate(category);
+										$deleteBudget.mutate(budget);
 									}}
 								/>
 							</div>
