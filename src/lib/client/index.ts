@@ -2,8 +2,9 @@ import { AuthenticationService } from './../services/auth/index';
 import { browser } from '$app/environment';
 import { accessTokenStore } from '$lib/stores';
 import { get } from 'svelte/store';
+import { env } from '$env/dynamic/public'
 
-export const API_URL = 'http://192.168.56.1:3000/api/graphql'
+export const API_URL = env.SF_API_URL
 export const queryFetch = (variables: any) => {
     return async () => {
         let token = browser ? get(accessTokenStore)?.token ?? null : null;
