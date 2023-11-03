@@ -74,7 +74,7 @@
 		</div>
 		<svelte:fragment slot="body" let:key let:row>
 			{#if key === 'actions'}
-				<Icon name="more_vert" className="w-full flex items-center m-0" />
+				<!-- <Icon name="more_vert" className="w-full flex items-center m-0" /> -->
 			{:else if key === 'select'}
 				<!-- 				<input type="checkbox" class="dui-checkbox dui-checkbox-primary m-auto" /> -->
 			{:else if key === 'date'}

@@ -11,6 +11,7 @@ export class AppState {
     description: string;
     image: string;
     status: number;
+    currecy: string;
     loading: boolean;
     collapsed: boolean;
     libraries: { google: boolean; };
@@ -27,6 +28,7 @@ export class AppState {
         description = 'descripcion',
         image = '',
         status = 200,
+        currecy = 'USD',
         loading = false,
         collapsed = false,
         libraries = {
@@ -46,6 +48,7 @@ export class AppState {
         this.description = description
         this.image = image
         this.status = status
+        this.currecy = currecy
         this.loading = loading
         this.collapsed = collapsed
         this.libraries = libraries

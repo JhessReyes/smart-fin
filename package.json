@@ -21,6 +21,7 @@
 		"@sveltejs/adapter-auto": "^2.0.0",
 		"@sveltejs/kit": "^1.20.4",
 		"@tailwindcss/typography": "^0.5.9",
+		"@types/lodash": "^4.14.200",
 		"@types/uuid": "^9.0.3",
 		"@typescript-eslint/eslint-plugin": "^5.45.0",
 		"@typescript-eslint/parser": "^5.45.0",
@@ -54,7 +55,9 @@
 		"@tailwindcss/forms": "^0.5.6",
 		"@tanstack/svelte-query": "^4.33.0",
 		"dayjs": "^1.11.9",
+		"echarts": "^5.4.3",
 		"firebase": "^10.5.0",
+		"lodash": "^4.17.21",
 		"uuid": "^9.0.1"
 	}
 }
