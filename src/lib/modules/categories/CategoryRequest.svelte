@@ -58,9 +58,8 @@
 </script>
 
 <form
-	on:submit={(e) => {
-		e.preventDefault();
-		e.stopPropagation();
+	id="category"
+	on:submit|preventDefault|stopPropagation={(e) => {
 		$mutationCategory.mutate(category);
 	}}
 >
@@ -70,6 +69,8 @@
 
 	<div class="dui-modal-action">
 		<Button class="dui-btn-ghost" on:click={() => (open = false)}>Cacelar</Button>
-		<Button class="dui-btn-primary" type="submit">{category?.id ? 'Actualizar' : 'Guardar'}</Button>
+		<Button class="dui-btn-primary" form="category" type="submit"
+			>{category?.id ? 'Actualizar' : 'Guardar'}</Button
+		>
 	</div>
 </form>
