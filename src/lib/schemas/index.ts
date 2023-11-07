@@ -66,6 +66,21 @@ export class AccessToken {
     }
 }
 
+export class Transaction {
+    description: string;
+    id: any;
+    date: Date;
+    amount: GLfloat;
+    categoryId: any;
+
+    constructor({ description = null, amount = null, date = new Date() } = {}) {
+        this.description = description
+        this.amount = amount
+        this.date = date
+    }
+
+}
+
 export class Category {
     name: string;
     id: any;

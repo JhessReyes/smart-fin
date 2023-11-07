@@ -1,4 +1,4 @@
-<script>
+<script lang="ts">
 	import { Button, Input, Toggle } from '$lib/components/atoms';
 	import DropZone from '$lib/components/atoms/DropZone.svelte';
 	// @ts-ignore
@@ -9,16 +9,19 @@
 	import { ADDTRANSACTION } from '$lib/api/transactions';
 	import { SelectCategories } from '$lib/modules/categories/components';
 	import { DatePicker } from 'stwui';
+	import { fade } from 'svelte/transition';
+	import { Transaction } from '$lib/schemas';
 
-	let request = 'ADD';
-	let transaction = {};
+	let request: string = 'ADD';
+	let transaction: any | object | { id: string } = new Transaction();
+	let current: boolean = true;
 	const handleSubmit = () => $mutationTransaction.mutate(transaction);
 	const mutationTransaction = createMutation({
 		mutationKey: request == 'ADD' ? ['addTransaction'] : ['updateTransaction'],
 		/**
 		 * @param {any} data
 		 */
-		mutationFn: async (data) => {
+		mutationFn: async (data: any) => {
 			const input = { ...data };
 			input.amount = parseFloat(input.amount);
 			return await mutationFetch({
@@ -61,7 +64,7 @@
 			<Input
 				form="transaction"
 				placeholder="Monto de la Transacción"
-				props={{ type: 'number' }}
+				props={{ type: 'number', step: 0.01 }}
 				required
 				bind:value={transaction.amount}
 			/>
@@ -72,25 +75,27 @@
 				class="dui-textarea dui-textarea-bordered dui-textarea-md h-32"
 				bind:value={transaction.description}
 			/>
-			<div class="flex justify-between">
-				<span class="font-semibold"> Mes en curso </span>
+			<div class="flex justify-end">
 				<div class="flex items-center gap-2">
 					<span class="font-light text-sm">Agregar al mes en curso</span>
-					<Toggle />
+					<Toggle bind:checked={current} />
 				</div>
 			</div>
 
-			<div>
-				<label for="date" class="text-sm font-medium">Fecha de la transaccion</label>
-				<DatePicker
-					name="date"
-					showTime
-					format="MMMM D, YYYY - h:mm A"
-					placeholder={'Fecha de la transacción'}
-				>
-					<DatePicker.Trailing slot="trailing" data={Calendar} />
-				</DatePicker>
-			</div>
+			{#if !current}
+				<div transition:fade>
+					<label for="date" class="text-sm font-medium">Fecha de la transaccion</label>
+					<DatePicker
+						name="date"
+						showTime
+						format="MMMM D YYYY h:mm A"
+						placeholder={'Fecha de la transacción'}
+						bind:value={transaction.date}
+					>
+						<DatePicker.Trailing slot="trailing" data={Calendar} />
+					</DatePicker>
+				</div>
+			{/if}
 		</div>
 		<div class="dui-modal-action">
 			<Button on:click={() => history.back()}>Cacelar</Button>
@@ -102,8 +107,13 @@
 
 	<section
 		role="complementary"
-		class="dui-card shadow-md w-full h-full m-auto p-12 bg-base-100 overflow-y-auto"
+		class="dui-card shadow-md w-full h-full m-auto p-12 bg-base-100 overflow-y-auto relative"
 	>
+		<div
+			class="overlay dui-hero-overlay absolute w-full h-full z-[1] right-0 top-0 text-center flex items-center justify-center"
+		>
+			<div class="bg-base-100 dui-card p-2 text-secondary italic text-lg">Actualiza tu plan</div>
+		</div>
 		<div class="dui-card bg-base-200 p-6 h-72 flex items-center justify-center gap-4">
 			<svelte:component this={Image} class="w-24 h-24" />
 			<div class="flex gap-2 items-center">
