@@ -1,5 +1,5 @@
 import * as echarts from "echarts";
-import _ from "lodash";
+import _, { type List } from "lodash";
 
 export const IncomeVsExpenses = ({ transactions }: { transactions: any[] }) => {
 
@@ -272,6 +272,8 @@ export function incomeExpensesChart(transactions: any, opt?: any) {
         ],
         title: {
             text: "Transacciones realizadas",
+            padding: 10,
+            left: "center"
         },
         dataZoom: [
             {
@@ -308,5 +310,54 @@ export function incomeExpensesChart(transactions: any, opt?: any) {
         series: seriesList,
     };
 
+    return options
+}
+
+export function top5Categories(transactions: {} | any, props?: any) {
+    // Agrupar transacciones por categoría
+    const groupByCategory = _.groupBy(transactions, 'category.name');
+
+    // Mapear y sumar los montos por categoría
+    const source = [
+        ['amount', 'category'],
+        ..._.map(groupByCategory, (T: List<unknown>, C: string) => [
+            _.sumBy(T, 'amount'),
+            C
+        ])
+    ];
+
+    let options: object = {}
+    options = {
+        title: {
+            text: "Categorias",
+            padding: 10,
+            left: "center"
+        },
+        legend: {},
+        dataset: {
+            source
+        },
+        grid: { containLabel: true },
+        xAxis: {},
+        yAxis: { type: 'category' },
+        visualMap: {
+            orient: 'horizontal',
+            left: 'center',
+            text: ['Alto', 'Bajo'],
+            dimension: 0,
+            inRange: {
+                color: ['#65B581', '#FFCE34', '#FD665F']
+            }
+        },
+        series: [
+            {
+                type: 'bar',
+                encode: {
+                    x: 'amount',
+                    y: 'category'
+                }
+            }
+        ]
+    };
     return options
 }
