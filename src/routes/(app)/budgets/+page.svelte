@@ -107,7 +107,6 @@
 	});
 
 	$: if (!open) selected = false;
-	$: console.log('AAA', me?.transactions);
 </script>
 
 <Drawer bind:open class="dui-drawer-end">

@@ -29,7 +29,6 @@
 
 	const mountChart = async (mode: string) => {
 		chart = echarts.init(element, mode, {
-			width: 'auto',
 			renderer: 'canvas'
 		});
 		let defaultOption = (await options) || setOption;

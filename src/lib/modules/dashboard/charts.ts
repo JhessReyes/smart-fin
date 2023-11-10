@@ -191,7 +191,7 @@ export function incomeExpensesChart(transactions: any, opt?: any) {
         transaccion.amount
     ]))
 
-    const dataSet = [...ingresosSeries, ...gastosSeries, ...balanceSeries];
+    const dataSet = [...ingresosSeries, ...gastosSeries];
 
     echarts.util.each(["INGRESO", "GASTO", "SALDO"], function (type: any) {
         var datasetId = "dataset_" + type;
@@ -287,7 +287,7 @@ export function incomeExpensesChart(transactions: any, opt?: any) {
             trigger: "axis",
         },
         xAxis: {
-            type: "time",
+            type: "category",
             nameLocation: "middle",
         },
         yAxis: {
@@ -355,6 +355,72 @@ export function top5Categories(transactions: {} | any, props?: any) {
                     x: 'amount',
                     y: 'category'
                 }
+            }
+        ]
+    };
+    return options
+}
+
+export const transactionsByDayOfWeek = (transactions: {} | any, props?: any) => {
+
+    let options: any = {}
+    const groupedAndSummedByDayOfWeek = _.chain(transactions)
+        .groupBy(item => {
+            const date = new Date(item.date);
+            const dayOfWeek = date.getDay(); // 0 (Sunday) to 6 (Saturday)
+            const dayNames = ['domingo', 'lunes', 'martes', 'miércoles', 'jueves', 'viernes', 'sábado'];
+            return dayNames[dayOfWeek];
+        })
+        .mapValues(dayOfWeekItems => _.sumBy(dayOfWeekItems, 'amount'))
+        .map((value, name) => ({ value, name }))
+        .value();
+
+    console.log(groupedAndSummedByDayOfWeek);
+    options = {
+        tooltip: {
+            trigger: 'item'
+        },
+        title: {
+            text: "Gastos por dia",
+            left: "center"
+        },
+        legend: {
+            top: '5%',
+            left: 'center',
+            padding: 20,
+
+        },
+        series: [
+            {
+                name: 'Access From',
+                type: 'pie',
+                radius: ['40%', '70%'],
+                center: ['50%', '70%'],
+                // adjust the start angle
+                startAngle: 180,
+                label: {
+                    show: true,
+                    formatter(param) {
+                        // correct the percentage
+                        return param.name + ' (' + param.percent * 2 + '%)';
+                    }
+                },
+                data: [...groupedAndSummedByDayOfWeek,
+                {
+                    // make an record to fill the bottom 50%
+                    value: groupedAndSummedByDayOfWeek.reduce((sum, item) => sum + item.value, 0),
+                    itemStyle: {
+                        // stop the chart from rendering this piece
+                        color: 'none',
+                        decal: {
+                            symbol: 'none'
+                        }
+                    },
+                    label: {
+                        show: false
+                    }
+                }
+                ]
             }
         ]
     };
