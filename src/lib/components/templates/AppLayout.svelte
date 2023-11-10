@@ -203,7 +203,7 @@
 			</div>
 			<slot name="actions"><!-- optional fallback --></slot>
 		</header>
-		<main class="py-5 grow overflow-x-hidden overflow-y-auto">
+		<main class="grow overflow-x-hidden overflow-y-auto">
 			<slot />
 		</main>
 	</div>

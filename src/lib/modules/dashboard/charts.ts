@@ -1,5 +1,5 @@
 import * as echarts from "echarts";
-import _ from "lodash";
+import _, { type List } from "lodash";
 
 export const IncomeVsExpenses = ({ transactions }: { transactions: any[] }) => {
 
@@ -12,7 +12,6 @@ export const IncomeVsExpenses = ({ transactions }: { transactions: any[] }) => {
         return transaction.date.split('T')[0]; // Agrupar por el día.
     });
 
-    console.log("AAA0", transactions);
     const balanceSeries = _.map(saldoPorDia, (transactions: any, dia: any) => {
         const saldo = _.sumBy(transactions, 'amount');
         return {
@@ -192,7 +191,7 @@ export function incomeExpensesChart(transactions: any, opt?: any) {
         transaccion.amount
     ]))
 
-    const dataSet = [...ingresosSeries, ...gastosSeries, ...balanceSeries];
+    const dataSet = [...ingresosSeries, ...gastosSeries];
 
     echarts.util.each(["INGRESO", "GASTO", "SALDO"], function (type: any) {
         var datasetId = "dataset_" + type;
@@ -272,6 +271,8 @@ export function incomeExpensesChart(transactions: any, opt?: any) {
         ],
         title: {
             text: "Transacciones realizadas",
+            padding: 10,
+            left: "center"
         },
         dataZoom: [
             {
@@ -286,7 +287,7 @@ export function incomeExpensesChart(transactions: any, opt?: any) {
             trigger: "axis",
         },
         xAxis: {
-            type: "time",
+            type: "category",
             nameLocation: "middle",
         },
         yAxis: {
@@ -308,5 +309,120 @@ export function incomeExpensesChart(transactions: any, opt?: any) {
         series: seriesList,
     };
 
+    return options
+}
+
+export function top5Categories(transactions: {} | any, props?: any) {
+    // Agrupar transacciones por categoría
+    const groupByCategory = _.groupBy(transactions, 'category.name');
+
+    // Mapear y sumar los montos por categoría
+    const source = [
+        ['amount', 'category'],
+        ..._.map(groupByCategory, (T: List<unknown>, C: string) => [
+            _.sumBy(T, 'amount'),
+            C
+        ])
+    ];
+
+    let options: object = {}
+    options = {
+        title: {
+            text: "Categorias",
+            padding: 10,
+            left: "center"
+        },
+        legend: {},
+        dataset: {
+            source
+        },
+        grid: { containLabel: true },
+        xAxis: {},
+        yAxis: { type: 'category' },
+        visualMap: {
+            orient: 'horizontal',
+            left: 'center',
+            text: ['Alto', 'Bajo'],
+            dimension: 0,
+            inRange: {
+                color: ['#65B581', '#FFCE34', '#FD665F']
+            }
+        },
+        series: [
+            {
+                type: 'bar',
+                encode: {
+                    x: 'amount',
+                    y: 'category'
+                }
+            }
+        ]
+    };
+    return options
+}
+
+export const transactionsByDayOfWeek = (transactions: {} | any, props?: any) => {
+
+    let options: any = {}
+    const groupedAndSummedByDayOfWeek = _.chain(transactions)
+        .groupBy(item => {
+            const date = new Date(item.date);
+            const dayOfWeek = date.getDay(); // 0 (Sunday) to 6 (Saturday)
+            const dayNames = ['domingo', 'lunes', 'martes', 'miércoles', 'jueves', 'viernes', 'sábado'];
+            return dayNames[dayOfWeek];
+        })
+        .mapValues(dayOfWeekItems => _.sumBy(dayOfWeekItems, 'amount'))
+        .map((value, name) => ({ value, name }))
+        .value();
+
+    console.log(groupedAndSummedByDayOfWeek);
+    options = {
+        tooltip: {
+            trigger: 'item'
+        },
+        title: {
+            text: "Gastos por dia",
+            left: "center"
+        },
+        legend: {
+            top: '5%',
+            left: 'center',
+            padding: 20,
+
+        },
+        series: [
+            {
+                name: 'Access From',
+                type: 'pie',
+                radius: ['40%', '70%'],
+                center: ['50%', '70%'],
+                // adjust the start angle
+                startAngle: 180,
+                label: {
+                    show: true,
+                    formatter(param) {
+                        // correct the percentage
+                        return param.name + ' (' + param.percent * 2 + '%)';
+                    }
+                },
+                data: [...groupedAndSummedByDayOfWeek,
+                {
+                    // make an record to fill the bottom 50%
+                    value: groupedAndSummedByDayOfWeek.reduce((sum, item) => sum + item.value, 0),
+                    itemStyle: {
+                        // stop the chart from rendering this piece
+                        color: 'none',
+                        decal: {
+                            symbol: 'none'
+                        }
+                    },
+                    label: {
+                        show: false
+                    }
+                }
+                ]
+            }
+        ]
+    };
     return options
 }

@@ -14,7 +14,7 @@
 	let headers: Array<TableHead> = [
 		{ key: 'select', label: '' },
 		{ sortable: true, key: 'description', label: 'Descripcion' },
-		{ sortable: true, key: 'amount', label: 'Monto' },
+		{ sortable: true, key: 'amount', label: `Monto ${$appState.currecy}` },
 		{ sortable: true, key: 'date', label: 'Fecha' },
 		{ sortable: true, key: 'category', label: 'Categoria' },
 		{ key: 'actions', label: '' }
@@ -80,17 +80,26 @@
 			{:else if key === 'select'}
 				<!-- 				<input type="checkbox" class="dui-checkbox dui-checkbox-primary m-auto" /> -->
 			{:else if key === 'date'}
-				<span
-					>{new Date(row?.date).toLocaleDateString(undefined, {
+				<span class="capitalize">
+					{new Date(row?.date).toLocaleDateString(undefined, {
 						weekday: 'long',
 						year: 'numeric',
 						month: 'long',
 						day: 'numeric'
-					})}</span
-				>
+					})}
+				</span>
 			{:else if key === 'category'}
 				<div class="dui-badge dui-badge-lg p-6 px-8 w-52 bg-green-100/25 text-green-500">
 					{row?.category}
+				</div>
+			{:else if key === 'amount'}
+				<div class="flex gap-10">
+					<strong>
+						{$appState.currecy}
+					</strong>
+					<span>
+						{parseFloat(row?.amount).toFixed(2)}
+					</span>
 				</div>
 			{:else}
 				{row[key]}

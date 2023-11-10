@@ -1,7 +1,7 @@
 <script lang="ts">
-	import { onMount } from 'svelte';
 	//@ts-ignore
 	import * as echarts from 'echarts';
+	import { appState } from '$lib/stores';
 
 	const setOption = {
 		title: {
@@ -27,16 +27,18 @@
 	let element: any = null;
 	let chart: any = null;
 
-	onMount(async () => {
-		chart = echarts.init(element, {
-			width: 'auto',
+	const mountChart = async (mode: string) => {
+		chart = echarts.init(element, mode, {
 			renderer: 'canvas'
 		});
 		let defaultOption = (await options) || setOption;
 		chart.setOption(defaultOption);
-	});
+	};
 
 	$: options && chart?.setOption(options);
+	$: if (element) mountChart(!$appState.theme ? 'dark' : null);
 </script>
 
-<div class="w-[275px] h-full p-4 sm:w-full sm:h-[350px] {className}" bind:this={element} />
+{#key $appState.theme}
+	<div class="w-full h-full m-0 {className}" bind:this={element} />
+{/key}

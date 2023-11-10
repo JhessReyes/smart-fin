@@ -2,8 +2,10 @@
 	import { fly } from 'svelte/transition';
 	import { Loading } from '../atoms';
 
-	export let className: string = '';
-	export let loading: boolean = true;
+	let className: string = '';
+	let loading: boolean = true;
+
+	export { className as class, loading };
 </script>
 
 <div
