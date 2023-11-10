@@ -12,7 +12,7 @@
 	onMount(async () => {
 		//@ts-ignore
 		me = data?.queryClient?.getQueryData(['Me'])?.data?.me;
-		$appState.currecy = me?.currecy;
+		me?.currecy && ($appState.currecy = me?.currecy);
 	});
 	$appState.title = 'Dashboard';
 </script>

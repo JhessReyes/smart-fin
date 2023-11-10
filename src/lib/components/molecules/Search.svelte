@@ -1,12 +1,12 @@
 <script>
 	import { onDestroy, tick } from 'svelte';
 	import { slide } from 'svelte/transition';
-	import { Button, Icon } from '../atoms';
-	export let className = '';
+	import { Icon } from '../atoms';
+	let className = '';
 	export let value = '';
 	export let placeholder = 'Buscar...';
 	export let open = false;
-
+	export { className as class };
 	/**
 	 * @type {HTMLInputElement}
 	 */

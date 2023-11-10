@@ -12,7 +12,6 @@ export const IncomeVsExpenses = ({ transactions }: { transactions: any[] }) => {
         return transaction.date.split('T')[0]; // Agrupar por el día.
     });
 
-    console.log("AAA0", transactions);
     const balanceSeries = _.map(saldoPorDia, (transactions: any, dia: any) => {
         const saldo = _.sumBy(transactions, 'amount');
         return {

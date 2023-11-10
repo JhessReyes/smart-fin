@@ -90,8 +90,8 @@
 
 <Drawer bind:open class="dui-drawer-end">
 	<Module loading={$queryCategories?.isLoading || $queryCategories?.isRefetching}>
-		<div class="flex flex-col gap-10">
-			<div class="flex justify-between">
+		<div class="flex flex-col gap-6">
+			<div class="flex flex-col md:flex-row justify-between gap-4">
 				<Search bind:value />
 				<Button
 					class="dui-btn-primary dui-btn-md"
@@ -102,19 +102,19 @@
 			<div>
 				<h2 class="m-0">Categorías Predeterminadas</h2>
 				<h6>Estas categorias estan hechas para que empieces con el control de tus finanzas</h6>
-				<div class="grid grid-cols-4 gap-4 py-4">
+				<div class="grid grid-cols-1 md:grid-cols-3 lg:grid-cols-4 gap-4 py-4">
 					{#each filterByValue(categories?.defaults?.length > 0 ? categories?.defaults : [{}], value) as category}
 						<Card title={category?.name} />
 					{/each}
 				</div>
 			</div>
 			<div>
-				<h2>Tus Categorías</h2>
+				<h2 class="m-0">Tus Categorías</h2>
 				<h6>Todas tus categorías en un solo lugar</h6>
-				<div class="grid grid-cols-4 gap-4 py-4">
+				<div class="grid grid-cols-1 md:grid-cols-3 lg:grid-cols-4 gap-4">
 					{#each filterByValue(categories?.rows?.length > 0 ? categories?.rows : [{}], value) as category}
 						<Card title={category?.name} class="cursor-pointer">
-							<div class="dui-modal-action">
+							<div class="dui-modal-action" slot="actions">
 								<Icon
 									name="edit"
 									className="rounded-full dui-btn dui-btn-outline dui-btn-warning w-12 h-12 flex items-center justify-center"
